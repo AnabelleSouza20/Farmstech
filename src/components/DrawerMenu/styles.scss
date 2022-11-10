@@ -1,0 +1,26 @@
+@import "./../../styles/variables";
+.drawer {
+    min-height: 100vh;
+    height: 100%;
+    .MuiPaper-root{
+        background: linear-gradient(90deg, $color-primary 0%, $color-secondary 99.99%, $color-secondary 100%);
+        color: $color-primary-contrast;
+        
+        position: relative;
+        min-height: 100vh;
+        height: 100%;
+    }
+    .menu-list{ top: 30% }
+    .logo{
+        max-width: 122px;
+    }
+}
+
+@media (max-height: 667px) {
+    .menu-list{ top: 5%!important; }
+
+}
+
+.drawer:hover{
+    color: plum;
+}

@@ -1,0 +1,39 @@
+.Fundo{
+    background:linear-gradient(100deg, rgba(#1B0536, .8) 55%, rgba(#110521, .1)100%),
+    url('../../assets/img/home.png') 100% 100%/100% 100% no-repeat;
+    height:100vh;
+}
+
+/* Descrição da Menu*/
+#fade-button{
+    color: #fff;   
+    font-size: 1.2vw;
+    padding-top: 8px;
+    padding-left: 50px;
+}
+
+/* Descrição da Pagina*/
+.iconPage{
+    width: 8vw;
+    height:20vh;
+}
+.logo{
+    padding-top: 10px;
+    padding-left: 50px;
+    width: 200px;
+}
+
+.titulo{
+    font-size: 30px;
+}
+ 
+.desc{
+    font-size: 20px;
+}
+
+.descHome{
+    margin-top: 25vh;
+}
+.descLazer{
+    margin-top: 10vh;
+}
