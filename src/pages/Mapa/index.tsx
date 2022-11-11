@@ -62,6 +62,9 @@ const Mapa = () => {
 
     }, [selectedPole]);
 
+    //grabs long and lat from the first pole
+    const { long, lat } = poles[0] || { long: 0, lat: 0 };
+    console.log(parseFloat(long), parseFloat(lat))
     return (
         <AzureMapsProvider>
             <div
@@ -103,7 +106,12 @@ const Mapa = () => {
                         </Typography>
                     </Box>
                 </Drawer>
-                <AzureMap options={option}>
+                <AzureMap options= {option}
+                cameraOptions={{
+                    zoom: 17,
+                    center: [parseFloat(long), parseFloat(lat)],
+                }}
+                >
                     <AzureMapDataSourceProvider id='MultiplePoint'>
                         <AzureMapLayerProvider
                             
