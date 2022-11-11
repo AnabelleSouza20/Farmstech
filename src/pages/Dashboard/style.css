@@ -1,0 +1,17 @@
+.cards {
+    background-color: #6039BF;
+    color:  white;
+    text-align: center;
+    border-radius: 20px;
+    font-size: 20px;
+    box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.123);
+
+}
+
+.number{
+    font-size: 30px;
+    margin-top: -30px;
+    font-weight: bold;
+}
+
+

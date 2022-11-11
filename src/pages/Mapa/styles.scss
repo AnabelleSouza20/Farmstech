@@ -1,0 +1,40 @@
+@import "./../../styles/variables";
+
+.itembtn{
+    background:linear-gradient(100deg, rgba(#6038C0, .8) 55%, rgba(#110521, .1)100%);
+    border-radius: 10px;
+    border-color: azure;
+    width: 130px;
+    height: 30px;
+    font-family: "Mukta", sans-serif;
+    font-weight: bold;
+    color: aliceblue;
+    cursor: pointer;
+}
+.itensnome{
+    font-family: "Mukta", sans-serif;
+    color: white;
+    font-size: 15px;
+}
+.imagem{ border-radius: 20px; }
+.popup-close{
+    color: white;
+    &:hover{ color: plum; }
+}
+.drawer {
+        background: linear-gradient(90deg, $color-primary 0%, $color-secondary 99.99%, $color-secondary 100%);
+        width: 100%;
+    }
+.title{
+    font-family: "Mukta", sans-serif;
+    color:azure;
+    padding: 10px;
+}
+.arrow{
+    background:linear-gradient(100deg, rgba(#6038C0, .8) 55%, rgba(#110521, .1)100%);
+}
+
+.styledtext{
+    color:#6038C0;
+    font-size: medium;
+}
