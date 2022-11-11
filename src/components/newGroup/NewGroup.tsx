@@ -1,30 +1,31 @@
-import { FormNewActive } from "../../_types";
-import "./styles.scss";
+import { FormNewGroup } from "../../_types";
+import "./stylesGroup.scss";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { toast } from "react-toastify";
 import useApi from "../../hooks/useApi";
 
+
 const validationForm = yup.object().shape({
-  device: yup.string().required("O NOME é obrigatório"),
+  groupName: yup.string().required("O NOME do grupo é obrigatório"),
   long: yup.string().required("A LONGITUDE é obrigatória"),
   lat: yup.string().required("A LATITUDE é obrigatória"),
   group: yup.string().required("O GRUPO é obrigatório"),
   desc: yup.string().required("A REFERÊNCIA é obrigatória"),
 });
 
-type NewActiveProps = {
+type NewGroupProps = {
   onClose: () => void;
 };
 
-function NewActive({ onClose }: NewActiveProps) {
+function NewGroup({ onClose }: NewGroupProps) {
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<FormNewActive>({
+  } = useForm<FormNewGroup>({
     resolver: yupResolver(validationForm),
   });
 
@@ -39,62 +40,29 @@ function NewActive({ onClose }: NewActiveProps) {
     if (res?.data?.FL_STATUS) {
       reset();
       onClose();
-      toast.success("Ativo cadastrado com sucesso");
+      toast.success("Grupo cadastrado com sucesso");
     } else {
-      toast.error("ERRO, ativo não cadastrado");
+      toast.error("ERRO, Grupo não cadastrado");
     }
   };
 
   return (
     <main>
       <div className="cards">
-        <h4 className="title">Cadastrar Novo Ativo</h4>
+        <h4 className="title">Cadastrar Novo Grupo</h4>
 
         <form className="form" onSubmit={handleSubmit(onSubmit)}>
           <div className="display-form">
-            <label className="label" htmlFor="device">
-              Nome:
+            <label className="label" htmlFor="groupName">
+              Nome do grupo:
             </label>
             <input
-              {...register("device")}
+              {...register("groupName")}
               className="input"
-              id="device"
+              id="groupName"
               type="text"
             />
-            <p className="error-message">{errors.device?.message}</p>
-
-            <label className="label" htmlFor="long">
-              Longitude:
-            </label>
-            <input
-              {...register("long")}
-              className="input"
-              id="long"
-              type="text"
-            />
-            <p className="error-message">{errors.long?.message}</p>
-
-            <label className="label" htmlFor="alt">
-              Latitude:
-            </label>
-            <input
-              {...register("lat")}
-              className="input"
-              id="lat"
-              type="text"
-            />
-            <p className="error-message">{errors.lat?.message}</p>
-
-            <label className="label" htmlFor="group">
-              Grupo:
-            </label>
-            <input
-              {...register("group")}
-              className="input"
-              id="group"
-              type="text"
-            />
-            <p className="error-message">{errors.group?.message}</p>
+            <p className="error-message">{errors.groupName?.message}</p>
 
             <label className="label" htmlFor="desc">
               Referência:
@@ -127,4 +95,4 @@ function NewActive({ onClose }: NewActiveProps) {
   );
 }
 
-export default NewActive;
+export default NewGroup;

@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Mapa from "./pages/Mapa";
 import Ativos from "./pages/Ativos"
 import Dashboard from "./pages/Dashboard";
+import Groups from "./pages/Grupos";
 
 
 
@@ -23,6 +24,7 @@ export default function RoutesComponent(){
             <Route path={`/mapa`} element={ <RequireAuth el={ <Mapa/> } /> } />
             <Route path={`/dash`} element={ <RequireAuth el={ <Dashboard/> } /> } />
             <Route path={`/ativos`} element={ <RequireAuth el={ <Ativos/> } /> } />
+            <Route path={`/grupos`} element={ <RequireAuth el={ <Groups/> } /> } />
             <Route path={`*`} />
         </Routes>
     );
