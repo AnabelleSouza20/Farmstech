@@ -33,6 +33,11 @@ const MenuItemsJSON: MenuProps[] = [
             "name": "Ativos",
             "isCentralized": false,
             "link": "/ativos"
+        },
+        {
+            "name": "Grupos",
+            "isCentralized": false,
+            "link": "/grupos"
         }
     ]
         

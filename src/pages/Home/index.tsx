@@ -118,6 +118,9 @@ export default function Home() {
             <a href="/ativos" className="a-not-effect">
               <MenuItem onClick={handleClose2}>Ativos</MenuItem>
             </a>
+              <MenuItem onClick={handleClose2}>Grupos</MenuItem>
+         
+            
           </Menu>
         </Grid>
       </Grid>
