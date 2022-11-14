@@ -5,6 +5,7 @@ import Mapa from "./pages/Mapa";
 import Ativos from "./pages/Ativos"
 import Dashboard from "./pages/Dashboard";
 import Groups from "./pages/Grupos";
+import Programação from "./pages/Ativos/programacao";
 
 
 
@@ -24,7 +25,11 @@ export default function RoutesComponent(){
             <Route path={`/mapa`} element={ <RequireAuth el={ <Mapa/> } /> } />
             <Route path={`/dash`} element={ <RequireAuth el={ <Dashboard/> } /> } />
             <Route path={`/ativos`} element={ <RequireAuth el={ <Ativos/> } /> } />
+
             <Route path={`/grupos`} element={ <RequireAuth el={ <Groups/> } /> } />
+
+            <Route path={`/Ativos/programacao`} element={ <RequireAuth el={ <Programação/> } /> } />
+
             <Route path={`*`} />
         </Routes>
     );
