@@ -15,8 +15,7 @@ import "./style.scss";
 import useApi from '../../hooks/useApi';
 import { toast } from 'react-toastify';
 import formatDate from '../../utils/formatDate';
-import { group } from 'console';
-import { boolean } from 'yup/lib/locale';
+
 
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -64,7 +63,7 @@ export default function Ativos() {
     const [open, setOpen] = useState(false);
     const [selectPole, setSelectPole] = useState<ILamp>();
     const requestApi = useApi();
-    const confirm:string = ""
+   
     
     const handleChange = (event: SelectChangeEvent) => {
     setAge(event.target.value as string);
@@ -81,8 +80,8 @@ export default function Ativos() {
           } catch (err) { }
       })();
     }, []);
-    
-    const series = distinct_json(lamps, 'group')    
+
+      
     
     const theme = createTheme({
       palette: {
@@ -95,6 +94,10 @@ export default function Ativos() {
       },
     });
 
+    //Function responsible for listing the groups to list the assets from the groups
+    const series = distinct_json(lamps, 'group')  
+
+    // Turns the asset lights on and off
     async function btnLamp(lamp:string, { device }:ILamp, state:boolean) {
       const paramets = {[lamp]:state, devices:[device]}
       console.log(paramets)
@@ -106,6 +109,7 @@ export default function Ativos() {
       state? toast.success('Acendeu a Lâmpada!') : toast.info('Desligou a Lâmpada!')
     }
 
+    // function to delete assets
     async function btnDelete( device:string | undefined) {
       const paramets = {device:device}
       console.log('teste')
@@ -119,10 +123,23 @@ export default function Ativos() {
       } else {
         toast.error("ERRO, ativo não foi deletado");
       }
-
+      setConfirmDelete("")
     }
+
+    const textConfirm = (event: React.ChangeEvent<HTMLInputElement>) => {
+      setConfirmDelete(event.target.value);
+    };
+
+    function assetsDelete(device:string | undefined){
+      if(confirmDelete === device){
+        btnDelete(device);
+      }else{
+        setConfirmDelete("")
+        toast.error("ERRO, ativo não foi encontrado");
+      }
+    }
+    
     return (
-      
         <div >
           <div>
             <Dialog
@@ -139,12 +156,18 @@ export default function Ativos() {
                 <p><strong>Grupo:</strong> {selectPole?.group}</p>
                 <p><strong>Descrição:</strong> {selectPole?.desc}</p>
                 </DialogContentText>
+                <DialogContentText>
+                  <br/>
+                <strong>Digite o nome do ativo que você deseja deletar.</strong>
+                </DialogContentText>
                 <TextField
                   autoFocus
                   size="small"
-                  id="name"
+                  id="confirmDelete"
                   label="Nome do Ativo"
                   type="text"
+                  value={confirmDelete}
+                  onChange={textConfirm}
                   variant="standard"
                   color='primary'
                 />
@@ -152,14 +175,18 @@ export default function Ativos() {
               <DialogActions>
                 <Button onClick={
                  ()=>{
-                      if (selectPole?.device===confirm) btnDelete(selectPole?.device);
-                      console.log(selectPole?.device)
-                      console.log(confirm)
+                      assetsDelete(selectPole?.device);
                       setOpen(false)
                     }
                   }
                   >Confirmar</Button>
-                <Button onClick={()=>{setOpen(false)}}>Cancelar</Button>
+                <Button onClick={
+                  ()=>{
+                    setConfirmDelete("")
+                    setOpen(false)
+                    }
+                  }
+                    >Cancelar</Button>
               </DialogActions>
             </Dialog>
           </div>
@@ -402,7 +429,5 @@ export default function Ativos() {
                 </Grid>
             </Grid>
         </div>
-
-
     )
 }
