@@ -111,14 +111,11 @@ export default function Home() {
             onClose={handleClose2}
             TransitionComponent={Fade}
           >
-            <a href="/mapa" className="a-not-effect">
-              <MenuItem onClick={handleClose2}>Mapa</MenuItem>
-            </a>
-            <MenuItem onClick={handleClose2}>Postes</MenuItem>
-            <MenuItem onClick={handleClose2}>Programação</MenuItem>
-            <a href="/ativos" className="a-not-effect">
-              <MenuItem onClick={handleClose2}>Ativos</MenuItem>
-            </a>
+            <MenuItem ><a href="/mapa" className="a-not-effect">Mapa</a></MenuItem>
+            <MenuItem onClick={handleClose2}>Grupos</MenuItem>
+
+              <MenuItem ><a href="/ativos" className="a-not-effect">Ativos</a></MenuItem>
+
           </Menu>
         </Grid>
       </Grid>
