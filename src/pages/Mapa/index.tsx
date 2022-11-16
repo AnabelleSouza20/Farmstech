@@ -9,8 +9,6 @@ import {
 import { data, MapMouseEvent, PopupOptions } from 'azure-maps-control';
 import { toast } from 'react-toastify';
 import { Popover, RenderPoint } from '../../components/map';
-
-import option from '../../utils/mapOptions';
 import { RequestBaseProps, PoleProps } from "../../_types";
 import useApi from '../../hooks/useApi';
 // import api from "../../api/api";
@@ -18,6 +16,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Drawer, Box, Typography, CircularProgress } from '@mui/material';
 
 import "./styles.scss";
+import mapOptions from '../../utils/mapOptions';
 
 const Mapa = () => {
     const requestApi = useApi();
@@ -114,11 +113,11 @@ const Mapa = () => {
                     </Box>
                 </Drawer>
             
-                <AzureMap   
-                cameraOptions={{
+                <AzureMap
+                 cameraOptions={{
                     center: [parseFloat(long), parseFloat(lat)],
-                }}
-                options= {option}
+                }}   
+                options={mapOptions}
                 >
                     <AzureMapDataSourceProvider id='MultiplePoint'>
                         <AzureMapLayerProvider

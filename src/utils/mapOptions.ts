@@ -1,18 +1,19 @@
 import { AuthenticationType, AuthenticationOptions } from 'azure-maps-control';
-import { Zoom } from 'react-toastify';
-import { PoleProps } from '../_types';
+import { Options } from 'azure-maps-control';
 
-
-const option: AuthenticationOptions = {
+const mapOptions: Options = {
     authOptions: {
         authType: AuthenticationType.subscriptionKey,
-        subscriptionKey:"gEsl1QnuuampM1x3yMlRiBiqMSUoiesXKa5EVflrhWo"
-    },
+        subscriptionKey: 'gEsl1QnuuampM1x3yMlRiBiqMSUoiesXKa5EVflrhWo'
+    } as AuthenticationOptions,
     view: 'fly',
     showLogo: false,
     style: 'satellite_road_labels',
     language: 'pt-BR',
     zoom: 17,
-    
 };
-export default option;
+
+
+
+
+export default mapOptions;
