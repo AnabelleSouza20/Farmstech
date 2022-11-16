@@ -15,7 +15,6 @@ import {
   Typography,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { Link } from "react-router-dom";
 import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
 import MuiAccordion, { AccordionProps } from "@mui/material/Accordion";
 import MuiAccordionSummary, {
@@ -23,12 +22,11 @@ import MuiAccordionSummary, {
 } from "@mui/material/AccordionSummary";
 import Box from "@mui/material/Box";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
-import StarBorderIcon from "@mui/icons-material/StarBorder";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
+
 import distinct_json from "../../utils/distinct";
-import { Edit, Delete } from "@mui/icons-material";
+import { Edit, Delete, Padding } from "@mui/icons-material";
 import { ILamp } from "../../_types";
-import NewActive from "../../components/newActive/NewActive";
+import NewGroup from "../../components/newGroup/NewGroup";
 import "./style.scss";
 import { useNavigate } from "react-router-dom";
 
@@ -86,25 +84,25 @@ const AccordionDetails: any = styled(MuiAccordionDetails)(({ theme }) => ({
   padding: theme.spacing(2),
   borderTop: "1px solid rgba(0, 0, 0, .125)",
 }));
-export default function Ativos() {
+export default function Groups() {
   const [lamps, setLamps] = useState<ILamp[]>([]);
   const [age, setAge] = useState("");
   const [status, setStatus] = useState<boolean>(false);
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isModalGroupVisible, setIsModalGroupVisible] = useState(false);
 
   const handleChange = (event: SelectChangeEvent) => {
     setAge(event.target.value as string);
   };
 
-  let res = async () => {
-    const poles = await sendApi("/poles-status");
-    const polesData = poles.data;
-    setLamps(polesData);
-  };
+  // let res = async () => {
+  //   const poles = await sendApi("/poles-status");
+  //   const polesData = poles.data;
+  //   setLamps(polesData);
+  // };
 
-  useEffect(() => {
-    res();
-  }, []);
+  // useEffect(() => {
+  //   res();
+  // }, []);
 
   const series = distinct_json(lamps, "group");
 
@@ -123,7 +121,7 @@ export default function Ativos() {
     console.log("olá");
   }
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   return (
     <div className="menuSuperior">
@@ -132,22 +130,23 @@ export default function Ativos() {
           <Button
             className="btnIncluir"
             variant="outlined"
-            onClick={() => setIsModalVisible(true)}
+            onClick={() => setIsModalGroupVisible(true)}
           >
-            Incluir Ativo
+            Adicionar Grupo
           </Button>
-          {isModalVisible ? (
-            <NewActive onClose={() => setIsModalVisible(false)} />
+          {isModalGroupVisible ? (
+            <NewGroup onClose={() => setIsModalGroupVisible(false)} />
           ) : null}
         </Grid>
         <Grid item xs={2.3}>
           <Button
             className="btnIncluir"
             variant="outlined"
-            onClick={() => navigate("/grupos")}
+            onClick={()=>navigate ('/ativos')}
           >
-            Grupos
+            Voltar
           </Button>
+          
         </Grid>
 
         <Grid
@@ -157,37 +156,19 @@ export default function Ativos() {
           direction="row"
           justifyContent="flex-start"
           alignItems="center"
-        >
-          <FormControl sx={{ minWidth: 300 }}>
-            <InputLabel id="demo-simple-select-label" color="primary">
-              Grupo
-            </InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={age}
-              label="Age"
-              onChange={handleChange}
-            >
-              <MenuItem value={"Todos"}>Todos</MenuItem>
-              {series.map((date) => {
-                return <MenuItem value={date}>{date}</MenuItem>;
-              })}
-            </Select>
-          </FormControl>
-        </Grid>
+        ></Grid>
 
         <Grid item xs={12}>
-          <Box padding={2} sx={{ width: "auto", backgroundColor: "purple" }}>
+          <Box padding={1.5} sx={{ width: "auto", backgroundColor: "purple" }}>
             <Grid container>
-              <Grid item xs={3} container justifyContent="flex-start">
-                <h1>Ativos</h1>
+              <Grid item xs={2} container justifyContent="flex-start">
+                <h1>Nome do Grupo</h1>
               </Grid>
-              <Grid item xs={3} container justifyContent="center">
-                <h1>Grupos</h1>
+              <Grid item xs={8} container justifyContent="center">
+                <h1>Editar</h1>
               </Grid>
-              <Grid item xs={3} container justifyContent="center">
-                <h1>Status</h1>
+              <Grid item xs={2} container justifyContent="center">
+                <h1>Deletar Grupo</h1>
               </Grid>
               <Grid item xs={3}></Grid>
             </Grid>

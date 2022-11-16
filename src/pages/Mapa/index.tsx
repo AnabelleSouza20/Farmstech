@@ -42,8 +42,14 @@ const Mapa = () => {
 
     async function btnLampada(lamp: string, { device }: any, state: boolean) {
         const paramets = { [lamp]: state, devices: [device] }
-        await requestApi('/farmstech_aut', "POST", paramets);
-        state ? toast.success('Acendeu a Lâmpada!') : toast.info('Desligou a Lâmpada!')
+        const response = await requestApi<{FL_STATUS:boolean}>('/farmstech_aut', "POST", paramets, false);
+        console.log(response)
+        if (response?.data && response.data.FL_STATUS){
+            state ? toast.success('Acendeu a Lâmpada!') : toast.info('Desligou a Lâmpada!')
+        } else {
+            toast.error("Não foi possível acender a Lâmpada!, verifique a conexão")
+        }
+        
     }
     const getPole = async (long: string, lat: string) => {
         const pole = poles.find(pole => pole.long === long && pole.lat === lat);
@@ -62,6 +68,9 @@ const Mapa = () => {
 
     }, [selectedPole]);
 
+    //extração de longitude e latitude do primeiro ativo carregado
+    const { long, lat } = poles[0] || { long: 0, lat: 0 };
+   
     return (
         <AzureMapsProvider>
             <div
@@ -103,7 +112,12 @@ const Mapa = () => {
                         </Typography>
                     </Box>
                 </Drawer>
-                <AzureMap options={option}>
+                <AzureMap options= {option}
+                cameraOptions={{
+                    zoom: 17,
+                    center: [parseFloat(long), parseFloat(lat)],
+                }}
+                >
                     <AzureMapDataSourceProvider id='MultiplePoint'>
                         <AzureMapLayerProvider
                             

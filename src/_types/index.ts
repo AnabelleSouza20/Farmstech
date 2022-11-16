@@ -88,3 +88,8 @@ export type FormNewActive ={
     desc:string
     }
 
+export type FormNewGroup ={
+    groupName: string
+    desc:string
+    }
+

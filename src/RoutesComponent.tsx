@@ -6,7 +6,6 @@ import Ativos from "./pages/Ativos"
 import Dashboard from "./pages/Dashboard";
 
 
-
 export default function RoutesComponent(){
     function RequireAuth({ el }: { el: React.ReactNode }){
         // const location = useLocation();
