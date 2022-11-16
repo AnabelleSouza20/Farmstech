@@ -87,9 +87,7 @@ export default function Home() {
           >
             <MenuItem onClick={handleClose}>Energia</MenuItem>
             <MenuItem onClick={handleClose}>Horas Ligadas</MenuItem>
-            <a href="/dash" className="a-not-effect">
-              <MenuItem onClick={handleClose}>Temperatura</MenuItem>
-            </a>
+            <MenuItem ><a href="/dash" className="a-not-effect">Temperatura</a></MenuItem>
           </Menu>
           <Button
             id="fade-button"
@@ -113,8 +111,7 @@ export default function Home() {
           >
             <MenuItem ><a href="/mapa" className="a-not-effect">Mapa</a></MenuItem>
             <MenuItem onClick={handleClose2}>Grupos</MenuItem>
-
-              <MenuItem ><a href="/ativos" className="a-not-effect">Ativos</a></MenuItem>
+            <MenuItem ><a href="/ativos" className="a-not-effect">Ativos</a></MenuItem>
 
           </Menu>
         </Grid>

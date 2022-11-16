@@ -57,7 +57,7 @@ function NewActive({ onClose }: NewActiveProps) {
   };
 
   return (
-    <main>      
+    <main id= "new-active">      
         <div className="cards">
           <h4 className="title">Cadastrar Novo Ativo</h4>
 

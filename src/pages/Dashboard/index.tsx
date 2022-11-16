@@ -21,7 +21,7 @@ function App() {
   return (
 
 
-    <Grid container spacing={1}>
+    <Grid container spacing={1} id="dash-page">
       <Grid item xs={4}>
         <div className="cards">
           <h4>Quantidade de Ativos</h4>
