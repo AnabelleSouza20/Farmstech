@@ -5,12 +5,12 @@ import { styled } from '@mui/material/styles';
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
 import MuiAccordion, { AccordionProps } from '@mui/material/Accordion';
 import MuiAccordionSummary, { AccordionSummaryProps} from '@mui/material/AccordionSummary';
-import Box from '@mui/material/Box';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import distinct_json from "../../utils/distinct";
 import { Edit, Delete, WatchLater, Star } from '@mui/icons-material';
-import { ILamp, RequestBaseProps } from '../../_types';
+import { ILamp, RequestBaseProps, AssetsEdit } from '../../_types';
 import NewActive from '../../components/newActive/NewActive'
+import EditAssets from '../../components/EditAssets/index'
 import "./style.scss";
 import useApi from '../../hooks/useApi';
 import { toast } from 'react-toastify';
@@ -20,7 +20,7 @@ import formatDate from '../../utils/formatDate';
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
 ))(({ theme }) => ({
-  border: `1px solid ${theme.palette.divider}`,
+  border: `3px solid ${theme.palette.divider}`,
   '&:not(:last-child)': {
     borderBottom: 1,
   },
@@ -49,22 +49,21 @@ const AccordionSummary = styled((props: AccordionSummaryProps) => (
   },
 }));
 
-//  ALTERAR CADASTRO        http://52.226.69.167:6000/poles-update/byfront
-// {"device": "FARMSTECH-POSTE-SEUNOME", "desc":"alto do morro", "group":"blueland", "lat":"-22.49733837","long": "-46.47321031"}
 const AccordionDetails: any = styled(MuiAccordionDetails)(({ theme }) => ({
   padding: theme.spacing(2),
   borderTop: '1px solid rgba(0, 0, 0, .125)',
 }));
+
+
 export default function Ativos() {
     const [lamps, setLamps] = useState<ILamp[]>([]);
     const [age, setAge] = useState("");
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const [confirmDelete, setConfirmDelete] = useState<string>()
-    const [open, setOpen] = useState(false);
+    const [isModalEdit, setIsModalEdit] = useState(false);
+    const [confirmDelete, setConfirmDelete] = useState<string>();
+    const [openModalDelete, setOpenModalDelete] = useState(false);
     const [selectPole, setSelectPole] = useState<ILamp>();
     const requestApi = useApi();
-   
-    
     const handleChange = (event: SelectChangeEvent) => {
     setAge(event.target.value as string);
      };
@@ -81,8 +80,6 @@ export default function Ativos() {
       })();
     }, []);
 
-      
-    
     const theme = createTheme({
       palette: {
         primary: {
@@ -125,7 +122,7 @@ export default function Ativos() {
       }
       setConfirmDelete("")
     }
-
+  
     const textConfirm = (event: React.ChangeEvent<HTMLInputElement>) => {
       setConfirmDelete(event.target.value);
     };
@@ -141,9 +138,10 @@ export default function Ativos() {
     
     return (
         <div >
+          {/*Modal to confirm asset deletion*/}
           <div>
             <Dialog
-              open={open}
+              open={openModalDelete}
               aria-labelledby="alert-dialog-title"
               aria-describedby="alert-dialog-description"
               >
@@ -161,7 +159,6 @@ export default function Ativos() {
                 <strong>Digite o nome do ativo que você deseja deletar.</strong>
                 </DialogContentText>
                 <TextField
-                  autoFocus
                   size="small"
                   id="confirmDelete"
                   label="Nome do Ativo"
@@ -170,20 +167,21 @@ export default function Ativos() {
                   onChange={textConfirm}
                   variant="standard"
                   color='primary'
+                  margin='normal'
                 />
               </DialogContent>
               <DialogActions>
                 <Button onClick={
                  ()=>{
                       assetsDelete(selectPole?.device);
-                      setOpen(false)
+                      setOpenModalDelete(false)
                     }
                   }
                   >Confirmar</Button>
                 <Button onClick={
                   ()=>{
                     setConfirmDelete("")
-                    setOpen(false)
+                    setOpenModalDelete(false)
                     }
                   }
                     >Cancelar</Button>
@@ -239,9 +237,7 @@ export default function Ativos() {
                 
                 <Grid
                 item xs={12}>
-                   <Box sx={{ width: '100%',
-                   backgroundColor: 'purple'
-                    }}>
+                   <div className='cabecalhoAtivos'>
                       <Grid container>
                         <Grid item xs={3}
                           container
@@ -265,7 +261,7 @@ export default function Ativos() {
 
                         </Grid>
                       </Grid> 
-                    </Box>
+                    </div>
                 </Grid>
                 
                 <Grid item xs={12}>   
@@ -315,15 +311,22 @@ export default function Ativos() {
                                         onClick={
                                           (e) => {
                                             e.stopPropagation();
+                                            setIsModalEdit(true)
                                           }
                                         }
                                         fontSize='large'
                                        />
+                                       {isModalEdit ? (
+                                                        <EditAssets 
+                                                          onClose={() => setIsModalEdit(false)} 
+                                                          assets= {pole}
+                                                           />
+                                                        ):null}
                                       <Delete
                                         onClick={
                                           (e) => {
                                             e.stopPropagation();
-                                            setOpen(true)
+                                            setOpenModalDelete(true)
                                             setSelectPole(pole)
                                           }
                                         }
@@ -377,6 +380,7 @@ export default function Ativos() {
                                               e.stopPropagation();
                                               const status = pole.lamp1 || pole.lamp2?false:true
                                               btnLamp("allLamps", pole, status)
+                                              
                                             }
                                           }    
                                         /> 
@@ -393,14 +397,23 @@ export default function Ativos() {
                                         onClick={
                                           (e) => {
                                             e.stopPropagation();
+                                            setIsModalEdit(true)
                                           }
                                         }
                                         fontSize='large'
                                        />
+                                       {isModalEdit ? (
+                                                        <EditAssets 
+                                                          onClose={() => setIsModalEdit(false)} 
+                                                          assets={pole}
+                                                           />
+                                                        ):null}
                                       <Delete
                                         onClick={
                                           (e) => {
                                             e.stopPropagation();
+                                            setOpenModalDelete(true)
+                                            setSelectPole(pole)
                                           }
                                         }
                                         fontSize='large'

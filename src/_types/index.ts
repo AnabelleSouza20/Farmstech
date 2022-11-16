@@ -11,7 +11,7 @@ export type Telemetry = {
     'total of poles': number;
   }
   
-/*Grafico de temperatura*/
+
 export type ILamp = {
     long: string;
     lat: string;
@@ -25,6 +25,14 @@ export type ILamp = {
     maint: boolean;
     status: boolean;
     tempESP: number;
+}
+
+export type AssetsEdit = {
+    long: string;
+    lat: string;
+    desc: string;
+    device: string;
+    group: string;
 }
 
 export type influxProps = {
@@ -87,4 +95,9 @@ export type FormNewActive ={
     group:string
     desc:string
     }
+
+export type NewActiveProps = {
+    onClose: () => void;
+    assets: ILamp;
+    };
 

@@ -11,6 +11,15 @@
     display: flex;
 }
 
+.cabecalhoAtivos{
+    background: rgb(55,30,96);
+    background: linear-gradient(90deg, rgba(55,30,96,1) 0%, rgba(33,33,33,1) 100%);
+    border-radius: 5px;
+    height: 40px;
+    padding-left: 10px;
+    padding-top: 5px;
+}
+
 .inconForm{
     width: 70px;
     height: 70px;

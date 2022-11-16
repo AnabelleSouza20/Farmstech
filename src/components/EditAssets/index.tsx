@@ -1,25 +1,27 @@
 
-import { FormNewActive } from "../_types";
+import { FormNewActive, ILamp, NewActiveProps } from "../../_types";
 import "./styles.scss";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { toast } from "react-toastify";
-import useApi from "../hooks/useApi";
+import useApi from "../../hooks/useApi";
 
 const validationForm = yup.object().shape({
   device: yup.string().required("O NOME é obrigatório"),
+  desc: yup.string().required("A REFERÊNCIA é obrigatória"),
+  group: yup.string().required("O GRUPO é obrigatório"),
   long: yup.string().required("A LONGITUDE é obrigatória"),
   lat: yup.string().required("A LATITUDE é obrigatória"),
-  group: yup.string().required("O GRUPO é obrigatório"),
-  desc: yup.string().required("A REFERÊNCIA é obrigatória"),
+  
 });
 
-type NewActiveProps = {
-  onClose: () => void;
-};
+//  ALTERAR CADASTRO        http://52.226.69.167:6000/poles-update/byfront
+// {"device": "FARMSTECH-POSTE-SEUNOME", "desc":"alto do morro", "group":"blueland", "lat":"-22.49733837","long": "-46.47321031"}
 
-function NewActive({ onClose }: NewActiveProps) {
+
+
+function NewActive({onClose, assets}:NewActiveProps) {
   const {
     register,
     handleSubmit,
@@ -33,22 +35,23 @@ function NewActive({ onClose }: NewActiveProps) {
 
   const onSubmit = async (data: any) => {
     const res = await sendApi<{ FL_STATUS: boolean; message: string }>(
-      "poles-register-dev",
-      "post",
+      "poles-update-dev/byfront",
+      "put",
       data
     );
     if (res?.data?.FL_STATUS) {
       reset();
-      toast.success("Ativo cadastrado com sucesso");
+      toast.success("Ativo Editado com sucesso");
     } else {
-      toast.error("ERRO, ativo não cadastrado");
+      toast.error("ERRO, ativo não foi editado");
     }
+    onClose()
   };
 
   return (
     <main>      
         <div className="cards">
-          <h4 className="title">Cadastrar Novo Ativo</h4>
+          <h4 className="title">Editar Ativo</h4>
 
           <form className="form" onSubmit={handleSubmit(onSubmit)}>
             <div className="display-form">
@@ -58,10 +61,35 @@ function NewActive({ onClose }: NewActiveProps) {
               <input
                 {...register("device")}
                 className="input"
+                value={assets.device}
                 id="device"
                 type="text"
               />
               <p className="error-message">{errors.device?.message}</p>
+              
+              <label className="label" htmlFor="desc">
+                Referência:
+              </label>
+              <input
+                {...register("desc")}
+                className="input"
+                defaultValue={assets.desc}
+                id="desc"
+                type="text"
+              />
+              <p className="error-message">{errors.desc?.message}</p>
+
+              <label className="label" htmlFor="group">
+                Grupo:
+              </label>
+              <input
+                {...register("group")}
+                className="input"
+                defaultValue={assets.group}
+                id="group"
+                type="text"
+              />
+              <p className="error-message">{errors.group?.message}</p>
 
               <label className="label" htmlFor="long">
                 Longitude:
@@ -69,6 +97,7 @@ function NewActive({ onClose }: NewActiveProps) {
               <input
                 {...register("long")}
                 className="input"
+                defaultValue={assets.long}
                 id="long"
                 type="text"
               />
@@ -80,32 +109,12 @@ function NewActive({ onClose }: NewActiveProps) {
               <input
                 {...register("lat")}
                 className="input"
+                defaultValue={assets.lat}
                 id="lat"
                 type="text"
               />
               <p className="error-message">{errors.lat?.message}</p>
 
-              <label className="label" htmlFor="group">
-                Grupo:
-              </label>
-              <input
-                {...register("group")}
-                className="input"
-                id="group"
-                type="text"
-              />
-              <p className="error-message">{errors.group?.message}</p>
-
-              <label className="label" htmlFor="desc">
-                Referência:
-              </label>
-              <input
-                {...register("desc")}
-                className="input"
-                id="desc"
-                type="text"
-              />
-              <p className="error-message">{errors.desc?.message}</p>
             </div>
 
             <div className="btn">
