@@ -15,7 +15,7 @@ import { RequestBaseProps, PoleProps } from "../../_types";
 import useApi from '../../hooks/useApi';
 // import api from "../../api/api";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { Drawer, Box, Typography } from '@mui/material';
+import { Drawer, Box, Typography, CircularProgress } from '@mui/material';
 
 import "./styles.scss";
 
@@ -30,7 +30,7 @@ const Mapa = () => {
     useEffect(() => {
         (async () => {
             try {
-                const response = await requestApi<RequestBaseProps<PoleProps[]>>('/poles-status', "get");
+                const response = await requestApi<RequestBaseProps<PoleProps[]>>('/poles-status-dev', "get");
 
                 if (response && response.data?.FL_STATUS) {
                     setPoles(response.data.data);
@@ -42,7 +42,7 @@ const Mapa = () => {
 
     async function btnLampada(lamp: string, { device }: any, state: boolean) {
         const paramets = { [lamp]: state, devices: [device] }
-        const response = await requestApi<{FL_STATUS:boolean}>('/farmstech_aut', "POST", paramets, false);
+        const response = await requestApi<{FL_STATUS:boolean}>('lamps-aut-dev', "POST", paramets, false);
         console.log(response)
         if (response?.data && response.data.FL_STATUS){
             state ? toast.success('Acendeu a Lâmpada!') : toast.info('Desligou a Lâmpada!')
@@ -69,7 +69,8 @@ const Mapa = () => {
     }, [selectedPole]);
 
     //extração de longitude e latitude do primeiro ativo carregado
-    const { long, lat } = poles[0] || { long: 0, lat: 0 };
+    const { long, lat } = poles[3] || { long: 0, lat: 0 };
+    console.log(long,lat);
    
     return (
         <AzureMapsProvider>
@@ -112,11 +113,12 @@ const Mapa = () => {
                         </Typography>
                     </Box>
                 </Drawer>
-                <AzureMap options= {option}
+            
+                <AzureMap   
                 cameraOptions={{
-                    zoom: 17,
                     center: [parseFloat(long), parseFloat(lat)],
                 }}
+                options= {option}
                 >
                     <AzureMapDataSourceProvider id='MultiplePoint'>
                         <AzureMapLayerProvider
