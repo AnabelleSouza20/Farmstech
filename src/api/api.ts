@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({ 
-    baseURL: "http://52.226.69.167:5000"
+    baseURL: "http://52.226.69.167:5002"
 })
 
 export async function sendApi(url:string){

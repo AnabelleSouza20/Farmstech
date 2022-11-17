@@ -6,9 +6,8 @@ import * as yup from "yup";
 import { toast } from "react-toastify";
 import useApi from "../../hooks/useApi";
 
-
 const validationForm = yup.object().shape({
-  groupName: yup.string().required("O NOME do grupo é obrigatório"),
+  group: yup.string().required("O NOME do grupo é obrigatório"),
 });
 
 type NewGroupProps = {
@@ -29,16 +28,22 @@ function NewGroup({ onClose }: NewGroupProps) {
 
   const onSubmit = async (data: any) => {
     const res = await sendApi<{ FL_STATUS: boolean; message: string }>(
-      "poles-register",
+      "groups-register-dev",
       "post",
       data
     );
+    const errorMessage = res?.data?.message
     if (res?.data?.FL_STATUS) {
       reset();
       onClose();
       toast.success("Grupo cadastrado com sucesso");
     } else {
-      toast.error("ERRO, Grupo não cadastrado");
+      if(errorMessage === "Not registered. Data DUPLICATE"){
+        toast.error("Esse GRUPO já existe.! \n Por favor insira outro nome");
+      }else{
+        toast.error("Grupo não cadastrado" + errorMessage)
+      }
+      
     }
   };
 
@@ -49,18 +54,16 @@ function NewGroup({ onClose }: NewGroupProps) {
 
         <form className="form" onSubmit={handleSubmit(onSubmit)}>
           <div className="display-form">
-            <label className="label" htmlFor="groupName">
+            <label className="label" htmlFor="group">
               Nome do grupo:
             </label>
             <input
-              {...register("groupName")}
+              {...register("group")}
               className="input"
-              id="groupName"
+              id="group"
               type="text"
             />
-            <p className="error-message">{errors.groupName?.message}</p>
-
-           
+            <p className="error-message">{errors.group?.message}</p>
           </div>
 
           <div className="btn">
