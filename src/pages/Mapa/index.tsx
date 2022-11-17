@@ -14,7 +14,6 @@ import useApi from '../../hooks/useApi';
 // import api from "../../api/api";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Drawer, Box, Typography, CircularProgress } from '@mui/material';
-
 import "./styles.scss";
 import mapOptions from '../../utils/mapOptions';
 
@@ -70,7 +69,7 @@ const Mapa = () => {
     //extração de longitude e latitude do primeiro ativo carregado
     const { long, lat } = poles[3] || { long: 0, lat: 0 };
     console.log(long,lat);
-   
+ 
     return (
         <AzureMapsProvider>
             <div
@@ -114,10 +113,14 @@ const Mapa = () => {
                 </Drawer>
             
                 <AzureMap
-                 cameraOptions={{
-                    center: [parseFloat(long), parseFloat(lat)],
-                }}   
                 options={mapOptions}
+               
+                cameraOptions={{     
+                    zoom:17,
+                    type: 'fly',
+                    duration: 5000,    
+                    center: [parseFloat(long), parseFloat(lat)],
+                }}  
                 >
                     <AzureMapDataSourceProvider id='MultiplePoint'>
                         <AzureMapLayerProvider
