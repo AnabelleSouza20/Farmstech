@@ -1,0 +1,118 @@
+.cards {
+    position:absolute;
+    width: 450px;
+    height: 610px;
+    display: grid;
+    grid-template-rows: 0.3fr 3fr auto-fit;        
+    text-align:center;
+    left: 28em;
+    top: 8em;
+    padding-top: 12px;
+    background:linear-gradient(90deg, rgba(#1B0536, 0.8) 40%, rgba(#110521, 0.3)100%);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 1.5rem;
+    z-index: 1;       
+}
+
+.assets{  
+    color: #fff;
+    font-size: 1.5em;
+    display: flex;
+    align-items: center;
+    padding-left: 25px;
+}
+.error-message{     
+    font-size:medium;
+    color:#f06767;
+   
+}
+
+.title{    
+    
+    font-family: "Saira", sans-serif;
+    font-size: 1.8em;
+    font-weight: 600;
+    color: #FFFFFF;
+   
+}
+
+
+.form{
+   
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    
+}
+
+.display-form{
+    width: 390px;
+    text-align: start;
+       
+}
+
+.label{
+    font-size:large;
+    font-family: "Saira", sans-serif;
+    color: #FFFFFF;
+}
+
+
+.input{
+    width: 24rem;
+    height: 2.3rem;
+    border:none;
+    border-radius: 0.3rem;
+    padding-left:0.5rem;
+    font-size:x-large;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-bottom: 0.5em;
+    margin-top: 0.5em;
+}
+  
+
+.btn{
+    width: 100%;
+    display: flex;    
+    justify-content: space-evenly;    
+
+}
+
+.btn-save{
+    display:block;
+    width: 7em;
+    height: 2em;
+    font-size: 1.5rem;
+    color: white;
+    font-weight: 600;
+    background: linear-gradient(180deg, #6038C0 0%, #5F3C8B 100%);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 0.5em;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-save:active{
+    background: linear-gradient(90deg, #6038C0 0%, #9777be 50%);
+    color:black;
+}
+.btn-cancel{
+    display:block;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    width: 7em;
+    height: 2em;
+    font-size: 1.5rem;
+    font-weight: 600;
+    background: linear-gradient(180deg, rgba(96, 56, 191, 0.5) 0%, rgba(95, 60, 141, 0.5) 50%), #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 0.5em;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-cancel:active{
+    background: linear-gradient(90deg, rgba(96, 56, 191, 0.5) 0%, rgba(137, 50, 134, 0.5) 50%);
+    color:white;
+}

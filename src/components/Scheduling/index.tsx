@@ -13,6 +13,7 @@ const validationForm = yup.object().shape({
   group: yup.string().required("O GRUPO é obrigatório"),
   long: yup.string().required("A LONGITUDE é obrigatória"),
   lat: yup.string().required("A LATITUDE é obrigatória"),
+  
 });
 
 function NewActive({onClose, assets}:NewActiveProps) {
@@ -45,70 +46,54 @@ function NewActive({onClose, assets}:NewActiveProps) {
   return (
     <main>      
         <div className="cards">
-          <h4 className="title">Editar Ativo</h4>
+          <h4 className="title">Agendamento</h4>
+          <h4 className="assets">{assets?.device}</h4>
 
           <form className="form" onSubmit={handleSubmit(onSubmit)}>
             <div className="display-form">
               <label className="label" htmlFor="device">
-                Nome:
+                Data:
               </label>
               <input
                 {...register("device")}
                 className="input"
-                value={assets?.device}
                 id="device"
-                type="text"
+                type="date"
               />
               <p className="error-message">{errors.device?.message}</p>
               
               <label className="label" htmlFor="desc">
-                Referência:
+                Inicio:
               </label>
               <input
                 {...register("desc")}
                 className="input"
-                defaultValue={assets?.desc}
                 id="desc"
-                type="text"
+                type="time"
               />
               <p className="error-message">{errors.desc?.message}</p>
 
               <label className="label" htmlFor="group">
-                Grupo:
+                Fim:
               </label>
               <input
                 {...register("group")}
                 className="input"
-                defaultValue={assets?.group}
                 id="group"
-                type="text"
+                type="time"
               />
               <p className="error-message">{errors.group?.message}</p>
 
               <label className="label" htmlFor="long">
-                Longitude:
+                Repetir:
               </label>
               <input
                 {...register("long")}
                 className="input"
-                defaultValue={assets?.long}
                 id="long"
                 type="text"
               />
               <p className="error-message">{errors.long?.message}</p>
-
-              <label className="label" htmlFor="alt">
-                Latitude:
-              </label>
-              <input
-                {...register("lat")}
-                className="input"
-                defaultValue={assets?.lat}
-                id="lat"
-                type="text"
-              />
-              <p className="error-message">{errors.lat?.message}</p>
-
             </div>
 
             <div className="btn">

@@ -98,6 +98,6 @@ export type FormNewActive ={
 
 export type NewActiveProps = {
     onClose: () => void;
-    assets: ILamp;
+    assets: ILamp  | undefined;
     };
 

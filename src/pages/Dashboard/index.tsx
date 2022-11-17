@@ -3,7 +3,7 @@ import { sendApi } from "../../api/api";
 import { Telemetry } from "../../_types";
 import Grid from '@mui/material/Grid';
 import "./style.css";
-import Grafico from "../../components/chartTemp";
+import Grafico from "../../components/ChartTemp";
 
 function App() {
   const [info, setInfo] = useState<Telemetry>();

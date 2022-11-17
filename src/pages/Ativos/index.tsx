@@ -1,26 +1,27 @@
 import { useState, useEffect } from 'react';
 import Grid from '@mui/material/Grid';
-import { Button, createTheme, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, IconButton, InputLabel, MenuItem, Select, SelectChangeEvent, Switch, TextField, ThemeProvider, Typography } from '@mui/material';
+import { Button, createTheme, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl,InputLabel, MenuItem, Select, SelectChangeEvent, Switch, TextField, ThemeProvider, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
 import MuiAccordion, { AccordionProps } from '@mui/material/Accordion';
 import MuiAccordionSummary, { AccordionSummaryProps} from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import distinct_json from "../../utils/distinct";
-import { Edit, Delete, WatchLater, Star } from '@mui/icons-material';
-import { ILamp, RequestBaseProps, AssetsEdit } from '../../_types';
-import NewActive from '../../components/newActive/NewActive'
-import EditAssets from '../../components/EditAssets/index'
+import {DeleteOutlined, AccessAlarmOutlined, ModeEditOutlineOutlined} from '@mui/icons-material';
+import { ILamp, RequestBaseProps} from '../../_types';
+import NewActive from '../../components/newActive/NewActive';
+import EditAssets from '../../components/EditAssets/index';
+import Scheduling from '../../components/Scheduling/index';
+
 import "./style.scss";
 import useApi from '../../hooks/useApi';
 import { toast } from 'react-toastify';
 import formatDate from '../../utils/formatDate';
 
-
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
 ))(({ theme }) => ({
-  border: `3px solid ${theme.palette.divider}`,
+  border: `10px solid ${theme.palette.divider}`,
   '&:not(:last-child)': {
     borderBottom: 1,
   },
@@ -36,10 +37,7 @@ const AccordionSummary = styled((props: AccordionSummaryProps) => (
   />
 ))(({ theme }) => ({
   borderBottom: `1px solid ${theme.palette.divider}`,
-  backgroundColor:
-    theme.palette.mode === 'dark'
-      ? 'rgba(255, 255, 255, .05)'
-      : 'rgba(0, 0, 0, .03)',
+  backgroundColor:'rgba(255, 255, 255, .05)',
   flexDirection: 'row-reverse',
   '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
     transform: 'rotate(90deg)',
@@ -54,12 +52,12 @@ const AccordionDetails: any = styled(MuiAccordionDetails)(({ theme }) => ({
   borderTop: '1px solid rgba(0, 0, 0, .125)',
 }));
 
-
 export default function Ativos() {
     const [lamps, setLamps] = useState<ILamp[]>([]);
     const [age, setAge] = useState("");
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [isModalEdit, setIsModalEdit] = useState(false);
+    const [isModalScheduling, setIsModalScheduling] = useState(false);
     const [confirmDelete, setConfirmDelete] = useState<string>();
     const [openModalDelete, setOpenModalDelete] = useState(false);
     const [selectPole, setSelectPole] = useState<ILamp>();
@@ -67,6 +65,7 @@ export default function Ativos() {
     const handleChange = (event: SelectChangeEvent) => {
     setAge(event.target.value as string);
      };
+
 
     useEffect(() => {
       (async () => {
@@ -99,7 +98,7 @@ export default function Ativos() {
       const paramets = {[lamp]:state, devices:[device]}
       console.log(paramets)
       const res = await requestApi<{ FL_STATUS: boolean; message: string }>(
-        "",
+        "lamps-aut-dev",
         "post",
         paramets
       );
@@ -109,7 +108,6 @@ export default function Ativos() {
     // function to delete assets
     async function btnDelete( device:string | undefined) {
       const paramets = {device:device}
-      console.log('teste')
       const res = await requestApi<{ FL_STATUS: boolean; message: string }>(
         "poles-delete-dev",
         "delete",
@@ -137,7 +135,9 @@ export default function Ativos() {
     }
     
     return (
-        <div >
+        <div>
+          {isModalScheduling? (<Scheduling onClose={()=> setIsModalScheduling(false)} assets = {selectPole}/>):null}
+          {isModalEdit ? (<EditAssets onClose={() => setIsModalEdit(false)} assets= {selectPole}/>):null}
           {/*Modal to confirm asset deletion*/}
           <div>
             <Dialog
@@ -146,7 +146,7 @@ export default function Ativos() {
               aria-describedby="alert-dialog-description"
               >
               <DialogTitle id="alert-dialog-title">
-                <h3>Você tem certeza que deseja deletar o ativo:</h3>
+                <h3>Tem certeza que deseja deletar o ativo:</h3>
               </DialogTitle>
               <DialogContent>
                 <DialogContentText id="alert-dialog-description">
@@ -171,17 +171,21 @@ export default function Ativos() {
                 />
               </DialogContent>
               <DialogActions>
-                <Button onClick={
-                 ()=>{
+                <Button 
+                  className='btnConfirmarDelete' 
+                  onClick={
+                    ()=>{
                       assetsDelete(selectPole?.device);
                       setOpenModalDelete(false)
                     }
                   }
                   >Confirmar</Button>
-                <Button onClick={
-                  ()=>{
-                    setConfirmDelete("")
-                    setOpenModalDelete(false)
+                <Button 
+                  className='btnCancelDelete' 
+                  onClick={
+                    ()=>{
+                      setConfirmDelete("")
+                      setOpenModalDelete(false)
                     }
                   }
                     >Cancelar</Button>
@@ -213,8 +217,8 @@ export default function Ativos() {
                             onChange={handleChange}
                         >
                             <MenuItem value={"Todos"}>Todos</MenuItem>
-                            {series.map((date)=>{
-                                return <MenuItem value={date}>{date}</MenuItem>
+                            {series.map((data)=>{
+                                return <MenuItem value={data}>{data}</MenuItem>
                             })}
                         </Select>
                     </FormControl>
@@ -243,19 +247,19 @@ export default function Ativos() {
                           container
                           justifyContent="flex-start"
                         >
-                          <h1>Ativos</h1>
+                          <h1 className='txtCabecalho'>Ativos</h1>
                         </Grid> 
                         <Grid item xs={3}
                           container
                           justifyContent="center"
                         >
-                          <h1>Grupos</h1>
+                          <h1 className='txtCabecalho'>Grupos</h1>
                         </Grid>
                         <Grid item xs={3}
                           container
                           justifyContent="center"
                         >
-                          <h1>Status</h1>
+                          <h1 className='txtCabecalho'>Status</h1>
                         </Grid>
                         <Grid item xs={3}>
 
@@ -268,7 +272,7 @@ export default function Ativos() {
                     {lamps.map((pole)=>{
                         if(pole.group === age){
                           return(
-                            <div>
+                            <div className='accordion'>
                               <Accordion key={pole.device}>
                                 <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
                                   <Grid item xs={4}>
@@ -306,36 +310,33 @@ export default function Ativos() {
                                     item xs={3}
                                     justifyContent="flex-end"
                                     alignItems="center"
-                                  >
-                                      <Edit
+                                    > 
+                                      <ModeEditOutlineOutlined
                                         onClick={
                                           (e) => {
                                             e.stopPropagation();
-                                            setIsModalEdit(true)
+                                            setSelectPole(pole);
+                                            setIsModalEdit(true);
                                           }
                                         }
                                         fontSize='large'
                                        />
-                                       {isModalEdit ? (
-                                                        <EditAssets 
-                                                          onClose={() => setIsModalEdit(false)} 
-                                                          assets= {pole}
-                                                           />
-                                                        ):null}
-                                      <Delete
+                                      <DeleteOutlined
                                         onClick={
                                           (e) => {
                                             e.stopPropagation();
-                                            setOpenModalDelete(true)
-                                            setSelectPole(pole)
+                                            setSelectPole(pole);
+                                            setOpenModalDelete(true);
                                           }
                                         }
                                         fontSize='large'
                                       />
-                                      <WatchLater
+                                      <AccessAlarmOutlined
                                         onClick={
                                           (e) => {
                                             e.stopPropagation();
+                                            setSelectPole(pole);
+                                            setIsModalScheduling(true);
                                           }
                                         }
                                         fontSize='large'
@@ -354,7 +355,7 @@ export default function Ativos() {
                     )}
                         else if(age === '' || age === 'Todos' )
                             return (
-                              <div>
+                              <div className='accordion'>
                               <Accordion key={pole.device}>
                                 <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
                                   <Grid item xs={4}>
@@ -364,7 +365,8 @@ export default function Ativos() {
                                           fontSize: '0.8rem', 
                                           color: 'grey', 
                                         }}
-                                      >última alreração: {formatDate(new Date(pole.datetime), "DD/MM/YYYY HH:ss")}</div>
+                                      >última alreração: {formatDate(new Date(pole.datetime), "DD/MM/YYYY HH:ss")}
+                                      </div>
                                     </Typography>
                                   </Grid>
                                   <Grid item xs={3}>
@@ -393,22 +395,17 @@ export default function Ativos() {
                                     justifyContent="flex-end"
                                     alignItems="center"
                                   >
-                                      <Edit
+                                      <ModeEditOutlineOutlined
                                         onClick={
                                           (e) => {
                                             e.stopPropagation();
-                                            setIsModalEdit(true)
+                                            setSelectPole(pole);
+                                            setIsModalEdit(true);
                                           }
                                         }
                                         fontSize='large'
                                        />
-                                       {isModalEdit ? (
-                                                        <EditAssets 
-                                                          onClose={() => setIsModalEdit(false)} 
-                                                          assets={pole}
-                                                           />
-                                                        ):null}
-                                      <Delete
+                                      <DeleteOutlined
                                         onClick={
                                           (e) => {
                                             e.stopPropagation();
@@ -418,7 +415,7 @@ export default function Ativos() {
                                         }
                                         fontSize='large'
                                       />
-                                      <WatchLater
+                                      <AccessAlarmOutlined
                                         onClick={
                                           (e) => {
                                             e.stopPropagation();
