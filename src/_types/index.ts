@@ -89,7 +89,6 @@ export type FormNewActive ={
     }
 
 export type FormNewGroup ={
-    groupName: string
-    desc:string
+    group: string
     }
 

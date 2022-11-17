@@ -97,7 +97,7 @@ export default function Ativos() {
   };
 
   let res = async () => {
-    const poles = await sendApi("/poles-status");
+    const poles = await sendApi("/poles-status-dev");
     const polesData = poles.data;
     setLamps(polesData);
   };
