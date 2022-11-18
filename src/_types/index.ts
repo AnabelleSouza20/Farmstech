@@ -92,3 +92,9 @@ export type FormNewGroup ={
     group: string
     }
 
+export type NewActiveProps = {
+    onClose: () => void;
+    assets: ILamp  | undefined;
+    };
+    
+

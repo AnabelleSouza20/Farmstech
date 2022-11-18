@@ -32,7 +32,7 @@ function NewActive({ onClose }: NewActiveProps) {
 
   const onSubmit = async (data: any) => {
     const res = await sendApi<{ FL_STATUS: boolean; message: string }>(
-      "poles-register",
+      "poles-register-dev",
       "post",
       data
     );
