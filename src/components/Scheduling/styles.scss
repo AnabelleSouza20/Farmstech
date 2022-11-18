@@ -1,48 +1,53 @@
-#css-card .cards {
+.cards {
     position:absolute;
     width: 450px;
-    height: 620px;
+    height: 510px;
     display: grid;
-    grid-template-rows: 0.3fr 3fr;        
+    grid-template-rows: 0.3fr 3fr auto-fit;        
     text-align:center;
     left: 28em;
     top: 8em;
     padding-top: 12px;
-    background:linear-gradient(90deg, rgba(#1B0536, 1) 50%, rgba(#110521, 1)100%);
+    background:linear-gradient(90deg, rgba(#1B0536, 0.8) 40%, rgba(#110521, 0.3)100%);
+    background-color: #6039BF !important;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 1.5rem;
-    z-index: 1;   
-    padding-bottom: 20px;    
+    margin-top: 50px;
+    z-index: 1;       
 }
 
+.assets{  
+    color: #fff;
+    font-size: 1.5em;
+    padding-left: 25px;
+    height: 40px;
+    display: flex;
+    text-align: start;
+    padding-top: 20px;
+}
 .error-message{     
     font-size:medium;
     color:#f06767;
    
 }
-
 .title{    
     
     font-family: "Saira", sans-serif;
     font-size: 1.8em;
     font-weight: 600;
     color: #FFFFFF;
-   
 }
-
 
 .form{
    
     display:flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    
 }
 
 .display-form{
     width: 390px;
-    text-align: start;
-       
+    text-align: start; 
 }
 
 .label{
@@ -68,7 +73,8 @@
 .btn{
     width: 100%;
     display: flex;    
-    justify-content: space-evenly;    
+    justify-content: space-evenly;  
+    margin-bottom: 20px;  
 
 }
 
