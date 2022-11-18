@@ -49,7 +49,7 @@ function NewGroup({ onClose }: NewGroupProps) {
 
   return (
     <main>
-      <div className="cards-newGroup">
+      <div className="cards-newGroup" id="card-novo">
         <h4 className="title">Cadastrar Novo Grupo</h4>
 
         <form className="form" onSubmit={handleSubmit(onSubmit)}>

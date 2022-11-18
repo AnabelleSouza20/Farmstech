@@ -47,7 +47,7 @@ function NewActive({ onClose }: NewActiveProps) {
 
   return (
     <main>      
-        <div className="cards">
+        <div className="cards" id="css-card">
           <h4 className="title">Cadastrar Novo Ativo</h4>
 
         <form className="form" onSubmit={handleSubmit(onSubmit)}>

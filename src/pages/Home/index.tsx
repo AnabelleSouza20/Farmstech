@@ -112,12 +112,11 @@ export default function Home() {
             <a href="/mapa" className="a-not-effect">
               <MenuItem onClick={handleClose2}>Mapa</MenuItem>
             </a>
-            
-            <MenuItem onClick={handleClose2}>Postes</MenuItem>
-            <MenuItem onClick={handleClose2}>Programação</MenuItem>
-            <a href="/ativos" className="a-not-effect">
-              <MenuItem onClick={handleClose2}>Ativos</MenuItem>
-            </a>
+            <a href="/ativos" className="a-not-effect"></a>
+            <MenuItem onClick={handleClose2}>Ativos</MenuItem>
+            <MenuItem onClick={handleClose2}>Grupos</MenuItem>
+
+
           </Menu>
         </Grid>
       </Grid>
