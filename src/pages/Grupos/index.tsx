@@ -1,16 +1,20 @@
 import { useState, useEffect } from "react";
-import { sendApi } from "../../api/api";
 import Grid from "@mui/material/Grid";
 import {
   Button,
   createTheme,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   FormControl,
-  IconButton,
   InputLabel,
   MenuItem,
   Select,
   SelectChangeEvent,
   Switch,
+  TextField,
   ThemeProvider,
   Typography,
 } from "@mui/material";
@@ -20,7 +24,11 @@ import MuiAccordion, { AccordionProps } from "@mui/material/Accordion";
 import MuiAccordionSummary, {
   AccordionSummaryProps,
 } from "@mui/material/AccordionSummary";
-import Box from "@mui/material/Box";
+import {
+  DeleteOutlined,
+  AccessAlarmOutlined,
+  ModeEditOutlineOutlined,
+} from "@mui/icons-material";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
 
 import distinct_json from "../../utils/distinct";
@@ -30,11 +38,12 @@ import NewGroup from "../../components/newGroup/NewGroup";
 import "./style.scss";
 import { useNavigate } from "react-router-dom";
 import useApi from "../../hooks/useApi";
+import { toast } from "react-toastify";
 
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
 ))(({ theme }) => ({
-  border: `1px solid ${theme.palette.divider}`,
+  border: `10px solid ${theme.palette.divider}`,
   "&:not(:last-child)": {
     borderBottom: 1,
   },
@@ -50,10 +59,7 @@ const AccordionSummary = styled((props: AccordionSummaryProps) => (
   />
 ))(({ theme }) => ({
   borderBottom: `1px solid ${theme.palette.divider}`,
-  backgroundColor:
-    theme.palette.mode === "dark"
-      ? "rgba(255, 255, 255, .05)"
-      : "rgba(0, 0, 0, .03)",
+  backgroundColor: "rgba(255, 255, 255, .05)",
   flexDirection: "row-reverse",
   "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
     transform: "rotate(90deg)",
@@ -63,25 +69,32 @@ const AccordionSummary = styled((props: AccordionSummaryProps) => (
   },
 }));
 
-
-
-
+const AccordionDetails: any = styled(MuiAccordionDetails)(({ theme }) => ({
+  padding: theme.spacing(2),
+  borderTop: "1px solid rgba(0, 0, 0, .125)",
+}));
 
 export default function Groups() {
+  const [age, setAge] = useState("");
   const [groups, setGroups] = useState<string[]>([]);
   const [isModalGroupVisible, setIsModalGroupVisible] = useState(false);
+  const [isModalEdit, setIsModalEdit] = useState(false);
+  const [isModalScheduling, setIsModalScheduling] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState<string>();
+  const [openModalDelete, setOpenModalDelete] = useState(false);
 
-  const sendApi = useApi()
+  const handleChange = (event: SelectChangeEvent) => {
+    setAge(event.target.value as string);
+  };
+
+  const sendApi = useApi();
+
   const getGroups = async () => {
-    const res = await sendApi(
-      "/groups-collect-dev",
-      "get"
-  );
-  if(res?.data && res?.data?.FL_STATUS){
-    setGroups(res?.data?.groups)
-  }
-  }
-    
+    const res = await sendApi("/groups-collect-dev", "get");
+    if (res?.data && res?.data?.FL_STATUS) {
+      setGroups(res?.data?.groups);
+    }
+  };
 
   useEffect(() => {
     getGroups();
@@ -134,55 +147,47 @@ export default function Groups() {
           alignItems="center"
         ></Grid>
 
-        
-
         <Grid item xs={12}>
-          <Box padding={1.5} sx={{ width: "auto", backgroundColor: "purple" }}>
+          <div className="cabecalhoAtivos">
             <Grid container>
-              <Grid item xs={2} container justifyContent="flex-start">
-                <h1>Nome do Grupo</h1>
+              <Grid item xs={3} container justifyContent="flex-start">
+                <h1 className="txtCabecalho">Nome do Grupo</h1>
               </Grid>
-              <Grid item xs={8} container justifyContent="center">
-                <h1>Editar</h1>
+              <Grid item xs={3} container justifyContent="center">
+                <h1 className="txtCabecalho">Editar</h1>
               </Grid>
-              <Grid item xs={2} container justifyContent="center">
-                <h1>Deletar Grupo</h1>
+              <Grid item xs={5} container justifyContent="center">
+                <h1 className="txtCabecalho">Deletar</h1>
               </Grid>
+
               <Grid item xs={3}></Grid>
             </Grid>
-          </Box>
-          
+          </div>
         </Grid>
+
         <Grid item xs={12}>
           {groups.map((list) => {
-            return(
-              <div>
-                <Accordion >
-                  <AccordionSummary key={list}
-                  
-                 >
+            return (
+              <div className="accordion">
+                <Accordion>
+                  <AccordionSummary key={list}>
                     <Grid item xs={4}>
-                    <Typography>
-                    {list} <br />
-                    {/* <div
+                      <Typography>
+                        {list} <br />
+                        {/* <div
                       style={{
                         fontSize:"0.8rem",
                         color: "red"
                       }}>
                         Última alteração: {list}
                     </div> */}
-                    </Typography>
-
+                      </Typography>
                     </Grid>
-                    
                   </AccordionSummary>
                 </Accordion>
-            </div>
-            )
-            
+              </div>
+            );
           })}
-
-
         </Grid>
       </Grid>
     </div>
