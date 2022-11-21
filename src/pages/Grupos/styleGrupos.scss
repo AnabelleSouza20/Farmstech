@@ -1,13 +1,23 @@
 
 .btnIncluir{
-    width: 10m;
-    height: 3em;
+    width: auto;
+    height: 50px;
     background: radial-gradient(circle, rgba(96,56,192,1) 0%, rgba(96,34,245,1) 100%) !important;
     color: #fff !important;
     font-size: 20px !important;
-  
+    border-radius: 50px !important;
     align-items: center !important;
     justify-content: center !important;
+    display: flex;
+}
+
+.cabecalhoAtivos{
+    background: rgb(55,30,96);
+    background: linear-gradient(90deg, rgba(55,30,96,1) 0%, rgba(33,33,33,1) 100%);
+    border-radius: 5px;
+    height: 40px;
+    padding-left: 10px;
+    padding-top: 5px;
     display: flex;
 }
 
@@ -20,22 +30,49 @@
 }
 .MuiFormControl-root{
     font-size: 30px;
-    border-radius: 10px;
-    background-color: #fff !important;
+    border-radius: 5px !important;
     border: none;
-}
-
-.teste{
-    font-size: 20px !important;
-    text-align: center;
-}
-.teste:hover{
-    color: blueviolet !important;
-}
-.css-ruq4u7-MuiFormLabel-root-MuiInputLabel-root{
-    color:black !important;
-}
-
-.css-ig0lvf-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root{
     color: black !important;
+}
+
+.accordion{
+    border-radius: 10px !important;
+
+}
+.css-1qd6hlb-MuiPaper-root-MuiAccordion-root{
+    color: rgba(0, 0, 0, 0.733) !important;
+}
+.MuiAccordion-region{
+    margin: 0 -10px !important;
+    border-radius: 10px;
+}
+
+.css-19hn6xk-MuiAccordionSummary-expandIconWrapper{
+    color: rgba(0, 0, 0, 0.733) !important;
+}
+.txtCabecalho{
+    font-size: 25px;
+    padding-top: 5px;
+}
+.css-1v40y74-MuiPaper-root-MuiDialog-paper{
+    background:linear-gradient(90deg, rgba(#1B0536, 0.8) 40%, rgba(#110521, 0.3)100%) !important;
+    background-color: #6039BF !important;
+}
+.btnConfirmarDelete{
+    background: linear-gradient(180deg, #6038C0 0%, #5F3C8B 100%) !important;
+    color: #fff !important;
+    font-weight: bold !important;
+    font-size: 15px !important;
+    border-radius: 10px !important;
+}
+.btnCancelDelete{
+    background: linear-gradient(180deg, rgba(96, 56, 191, 0.5) 0%, rgba(95, 60, 141, 0.5) 50%), #FFFFFF !important;
+    color: #250053 !important;
+    font-weight: bold !important;
+    font-size: 15px !important;
+    border-radius: 10px !important;
+    
+}
+.css-yiavyu-MuiBackdrop-root-MuiDialog-backdrop {
+    background: none !important;
 }
