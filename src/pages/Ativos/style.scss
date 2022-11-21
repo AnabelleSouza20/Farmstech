@@ -124,7 +124,7 @@
 .btnAlarm:hover{
     color: #6038C0 !important;
     transform: scale(1.2);
-    transition: ease-in-out 0.5s;
+    transition: 0.5s;
 }
 .btnAlarm:not(:hover){
     transition: ease-in-out 0.5s;
@@ -133,7 +133,7 @@
 .btnDelete:hover{
     color: #6038C0 !important;
     transform: scale(1.2);
-    transition: ease-in-out 0.5s;
+    transition: 0.5s;
 }
 .btnDelete:not(:hover){
     transition: ease-in-out 0.5s;
@@ -142,7 +142,7 @@
 .btnEdit:hover{
     color: #6038C0 !important;
     transform: scale(1.2);
-    transition: ease-in-out 0.5s;
+    transition: 0.5s;
 }
 .btnEdit:not(:hover){
     transition: ease-in-out 0.5s;
