@@ -10,40 +10,53 @@ function App() {
   const [info, setInfo] = useState<Telemetry>();
   const requestApi = useApi();
 
+
+
+
+
+
   useEffect(() => {
     (async () => {
         try {
-            const response = await requestApi<RequestBaseProps<Telemetry>>('/poles-cards-dev', "get");
-            if (response && response.data?.FL_STATUS) {
-                setInfo(response.data.data);
+            const response:any = await requestApi<RequestBaseProps<Telemetry>>('/poles-cards-dev', "get");
+            if (response && !response.data?.FL_STATUS) {
+              setInfo(response.data);
             }
         } catch (err) { }
     })();
   }, []);
-console.log('teste',info)
+
+  console.log(info)
+
+  
+
+
+
+
+
   return (
     <Grid container spacing={1} id="dash-page">
       <Grid item xs={3}>
-        <div className="cards">
+        <div className="cards02">
           <h4>Quantidade de Ativos</h4>
           <p className="number">{info?.["total of poles"]}</p>
         </div>
      </Grid>
       <Grid item xs={3}>
-        <div className="cards">
+        <div className="cards02">
           <h4>Ativos ligados</h4>
           <p className="number">{info?.Installed}</p>
         </div>
       </Grid>
 
       <Grid item xs={3}>
-        <div className="cards">
+        <div className="cards02">
           <h4>Ativos desligados</h4>
           <p className="number">{info?.["Not installed"]}</p>
         </div>
      </Grid>
       <Grid item xs={3}>
-        <div className="cards">
+        <div className="cards02">
           <h4>Ativos em manutenção</h4>
           <p className="number">{info?.Maintenance}</p>
         </div>
