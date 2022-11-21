@@ -25,6 +25,11 @@
         background: linear-gradient(90deg, $color-primary 0%, $color-secondary 99.99%, $color-secondary 100%);
         width: 100%;
     }
+.drawer:hover{
+    background: linear-gradient(90deg, $color-primary 0%, $color-secondary 99.99%, $color-secondary 100%);
+    width: 100%;
+}
+
 .title{
     font-family: "Mukta", sans-serif;
     color:azure;

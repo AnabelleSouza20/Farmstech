@@ -1,13 +1,18 @@
 .btnIncluir01{
     width: 150px;
     height: 50px;
-    background: radial-gradient(circle, rgba(96,56,192,1) 0%, rgba(96,34,245,1) 100%) !important;
+    background: linear-gradient(180deg, #6038C0 0%, #5F3C8B 100%) !important;
     color: #fff !important;
     font-size: 20px !important;
     border-radius: 50px !important;
     align-items: center !important;
     justify-content: center !important;
     display: flex;
+    transition: 0.5s ease-in-out !important;
+}
+
+.btnIncluir01:hover{
+   transform: scale(1.05);
 }
 
 .cabecalhoAtivos{
@@ -116,8 +121,32 @@
 .css-yiavyu-MuiBackdrop-root-MuiDialog-backdrop {
     background: none !important;
 }
+.btnAlarm:hover{
+    color: #6038C0 !important;
+    transform: scale(1.2);
+    transition: ease-in-out 0.5s;
+}
+.btnAlarm:not(:hover){
+    transition: ease-in-out 0.5s;
+}
 
+.btnDelete:hover{
+    color: #6038C0 !important;
+    transform: scale(1.2);
+    transition: ease-in-out 0.5s;
+}
+.btnDelete:not(:hover){
+    transition: ease-in-out 0.5s;
+}
 
+.btnEdit:hover{
+    color: #6038C0 !important;
+    transform: scale(1.2);
+    transition: ease-in-out 0.5s;
+}
+.btnEdit:not(:hover){
+    transition: ease-in-out 0.5s;
+}
 
 
 

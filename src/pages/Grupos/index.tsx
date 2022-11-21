@@ -150,17 +150,12 @@ export default function Groups() {
         <Grid item xs={12}>
           <div className="cabecalhoAtivos">
             <Grid container>
-              <Grid item xs={3} container justifyContent="flex-start">
+              <Grid item xs={9} container justifyContent="flex-start">
                 <h1 className="txtCabecalho">Nome do Grupo</h1>
               </Grid>
               <Grid item xs={3} container justifyContent="center">
-                <h1 className="txtCabecalho">Editar</h1>
+                <h2 className="txtCabecalho">Editar | Deletar</h2>
               </Grid>
-              <Grid item xs={5} container justifyContent="center">
-                <h1 className="txtCabecalho">Deletar</h1>
-              </Grid>
-
-              <Grid item xs={3}></Grid>
             </Grid>
           </div>
         </Grid>
@@ -185,17 +180,25 @@ export default function Groups() {
                     </Grid>
                     <Grid 
                                     container
-                                    item xs={12}
+                                    item xs={7.5}
                                     justifyContent="flex-end"
                                     > 
+                                    <Grid
+                                    item xs={1}
+                                    >
                                       <ModeEditOutlineOutlined
                                         className="iconEdit"
                                         fontSize='large'
                                        />
+                                    </Grid>
+                                    <Grid
+                                    item xs={1}
+                                    >
                                       <DeleteOutlined
                                       className="iconDelete"
                                         fontSize='large'
                                       />
+                                    </Grid>
                                       
                                   </Grid>
                   </AccordionSummary>

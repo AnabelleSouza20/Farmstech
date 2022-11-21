@@ -321,6 +321,7 @@ export default function Ativos() {
                                     alignItems="center"
                                     > 
                                       <ModeEditOutlineOutlined
+                                        className='btnEdit'
                                         onClick={
                                           (e) => {
                                             e.stopPropagation();
@@ -331,6 +332,7 @@ export default function Ativos() {
                                         fontSize='large'
                                        />
                                       <DeleteOutlined
+                                        className='btnDelete'
                                         onClick={
                                           (e) => {
                                             e.stopPropagation();
@@ -341,6 +343,7 @@ export default function Ativos() {
                                         fontSize='large'
                                       />
                                       <AccessAlarmOutlined
+                                        className='btnAlarm'
                                         onClick={
                                           (e) => {
                                             e.stopPropagation();
