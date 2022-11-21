@@ -91,10 +91,18 @@ export type FormNewActive ={
 export type FormNewGroup ={
     group: string
     }
+export type FormEditGroup ={
+    alter: string
+    }
 
 export type NewActiveProps = {
     onClose: () => void;
     assets: ILamp  | undefined;
     };
+
+    export type EditGrupProps = {
+        onClose: () => void;
+        assets: String  | undefined;
+        };
     
 
