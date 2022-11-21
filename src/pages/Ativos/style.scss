@@ -121,32 +121,33 @@
 .css-yiavyu-MuiBackdrop-root-MuiDialog-backdrop {
     background: none !important;
 }
-.btnAlarm:hover{
+
+.iconEdit:hover{
     color: #6038C0 !important;
     transform: scale(1.2);
-    transition: 0.5s;
+    transition: ease-in-out 0.5s;
 }
-.btnAlarm:not(:hover){
+.iconEdit:not(:hover){
     transition: ease-in-out 0.5s;
 }
 
-.btnDelete:hover{
+.iconDelete:hover{
     color: #6038C0 !important;
     transform: scale(1.2);
     transition: 0.5s;
 }
-.btnDelete:not(:hover){
+.iconDelete:not(:hover){
+    transition: ease-in-out 0.5s;
+}
+.iconAlarm:hover{
+    color: #6038C0 !important;
+    transform: scale(1.2);
+    transition: 0.5s;
+}
+.iconAlarm:not(:hover){
     transition: ease-in-out 0.5s;
 }
 
-.btnEdit:hover{
-    color: #6038C0 !important;
-    transform: scale(1.2);
-    transition: 0.5s;
-}
-.btnEdit:not(:hover){
-    transition: ease-in-out 0.5s;
-}
 
 
 

@@ -26,14 +26,6 @@ function App() {
     })();
   }, []);
 
-  console.log(info)
-
-  
-
-
-
-
-
   return (
     <Grid container spacing={1} id="dash-page">
       <Grid item xs={3}>

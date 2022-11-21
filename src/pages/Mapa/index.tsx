@@ -25,6 +25,7 @@ const Mapa = () => {
     const [openedPopover, setOpenedPopover] = useState(false);
     const [popupOptions, setPopupOptions] = useState<PopupOptions>({});
 
+
     useEffect(() => {
         (async () => {
             try {
@@ -41,7 +42,6 @@ const Mapa = () => {
     async function btnLampada(lamp: string, { device }: any, state: boolean) {
         const paramets = { [lamp]: state, devices: [device] }
         const response = await requestApi<{FL_STATUS:boolean}>('lamps-aut-dev', "POST", paramets, false);
-        console.log(response)
         if (response?.data && response.data.FL_STATUS){
             state ? toast.success('Acendeu a Lâmpada!') : toast.info('Desligou a Lâmpada!')
         } else {
@@ -52,7 +52,6 @@ const Mapa = () => {
     const getPole = async (long: string, lat: string) => {
         const pole = poles.find(pole => pole.long === long && pole.lat === lat);
         if (!pole) return;
-        console.log(pole)
         setSelectedPole(pole);
     };
 
@@ -67,8 +66,8 @@ const Mapa = () => {
     }, [selectedPole]);
 
     //extração de longitude e latitude do primeiro ativo carregado
-    const { long, lat } = poles[3] || { long: 0, lat: 0 };
-    console.log(long,lat);
+    const lati = parseFloat(poles[3]?.lat || '0');
+    const longi = parseFloat(poles[3]?.long || '0');
  
     return (
         <AzureMapsProvider>
@@ -119,7 +118,7 @@ const Mapa = () => {
                     zoom:17,
                     type: 'fly',
                     duration: 5000,    
-                    center: [parseFloat(long), parseFloat(lat)],
+                    center: [longi, lati],
                 }}  
                 >
                     <AzureMapDataSourceProvider id='MultiplePoint'>
