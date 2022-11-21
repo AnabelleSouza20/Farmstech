@@ -21,6 +21,7 @@ function App() {
     })();
   }, []);
 console.log('teste',info)
+
   return (
     <Grid container spacing={1} id="dash-page">
       <Grid item xs={3}>

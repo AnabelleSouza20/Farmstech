@@ -39,9 +39,7 @@ import "./styleGrupos.scss";
 import { useNavigate } from "react-router-dom";
 import useApi from "../../hooks/useApi";
 import { toast } from "react-toastify";
-import EditGroup from "../../components/EditGroup/EditGroup"
-
-
+import EditGroup from "../../components/EditGroup/EditGroup";
 
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -116,89 +114,93 @@ export default function Groups() {
 
   const navigate = useNavigate();
 
-  async function btnDelete( device:String | undefined) {
-    const paramets = {"group":device}
+  async function btnDelete(device: String | undefined) {
+    const paramets = { group: device };
     const res = await sendApi<{ FL_STATUS: boolean; message: string }>(
       "groups-delete-dev",
       "delete",
       paramets
     );
-    console.log('teste', paramets)
+    console.log("teste", paramets);
     if (res?.data?.FL_STATUS) {
       toast.success("Grupo deletado com sucesso");
     } else {
       toast.error("ERRO, Grupo não foi deletado");
     }
-    setConfirmDelete("")
+    setConfirmDelete("");
   }
 
   const textConfirm = (event: React.ChangeEvent<HTMLInputElement>) => {
     setConfirmDelete(event.target.value);
   };
 
-  function assetsDelete(device:String | undefined){
-    if(confirmDelete === device){
+  function assetsDelete(device: String | undefined) {
+    if (confirmDelete === device) {
       btnDelete(device);
-    }else{
-      setConfirmDelete("")
+    } else {
+      setConfirmDelete("");
       toast.error("ERRO, ativo não foi encontrado");
     }
   }
 
   return (
-        <div className="menuSuperior">
-          {isModalEdit ? (<EditGroup onClose={() => setIsModalEdit(false)} assets= {selectGrup}/>):null}
-          <div>
-            <Dialog
-              open={openModalDelete}
-              aria-labelledby="alert-dialog-title"
-              aria-describedby="alert-dialog-description"
-              >
-              <DialogTitle id="alert-dialog-title">
-                <h3>Tem certeza que deseja deletar o grupo:</h3>
-              </DialogTitle>
-              <DialogContent>
-                <DialogContentText id="alert-dialog-description">
-                <p><strong>Grupo:</strong> {selectGrup}</p>
-                </DialogContentText>
-                <DialogContentText>
-                  <br/>
-                <strong>Digite o nome do grupo que você deseja deletar.</strong>
-                </DialogContentText>
-                <TextField
-                  size="small"
-                  id="confirmDelete"
-                  label="Nome do Ativo"
-                  type="text"
-                  value={confirmDelete}
-                  onChange={textConfirm}
-                  variant="standard"
-                  color='primary'
-                  margin='normal'
-                />
-              </DialogContent>
-              <DialogActions>
-                <Button 
-                  className='btnConfirmarDelete' 
-                  onClick={
-                    ()=>{
-                      assetsDelete(selectGrup);
-                      setOpenModalDelete(false)
-                    }
-                  }
-                  >Confirmar</Button>
-                <Button 
-                  className='btnCancelDelete' 
-                  onClick={
-                    ()=>{
-                      setConfirmDelete("")
-                      setOpenModalDelete(false)
-                    }
-                  }
-                    >Cancelar</Button>
-              </DialogActions>
-            </Dialog>
-          </div>
+    <div className="menuSuperior">
+      {isModalEdit ? (
+        <EditGroup onClose={() => setIsModalEdit(false)} assets={selectGrup} />
+      ) : null}
+      <div>
+        <Dialog
+          open={openModalDelete}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            <h3>Tem certeza que deseja deletar o grupo:</h3>
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              <p>
+                <strong>Grupo:</strong> {selectGrup}
+              </p>
+            </DialogContentText>
+            <DialogContentText>
+              <br />
+              <strong>Digite o nome do grupo que você deseja deletar.</strong>
+            </DialogContentText>
+            <TextField
+              size="small"
+              id="confirmDelete"
+              label="Nome do Ativo"
+              type="text"
+              value={confirmDelete}
+              onChange={textConfirm}
+              variant="standard"
+              color="primary"
+              margin="normal"
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button
+              className="btnConfirmarDelete"
+              onClick={() => {
+                assetsDelete(selectGrup);
+                setOpenModalDelete(false);
+              }}
+            >
+              Confirmar
+            </Button>
+            <Button
+              className="btnCancelDelete"
+              onClick={() => {
+                setConfirmDelete("");
+                setOpenModalDelete(false);
+              }}
+            >
+              Cancelar
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
 
       <Grid container spacing={2}>
         <Grid item xs={2.3}>
@@ -263,43 +265,30 @@ export default function Groups() {
                     </div> */}
                       </Typography>
                     </Grid>
-                    <Grid 
-                                    container
-                                    item xs={7.5}
-                                    justifyContent="flex-end"
-                                    > 
-                                    <Grid
-                                    item xs={1}
-                                    >
-                                      <ModeEditOutlineOutlined
-                                        className="iconEdit"
-                                        fontSize='large'
-                                        onClick={
-                                          (e) => {
-                                            e.stopPropagation();
-                                            setSelectGrup(list);
-                                            setIsModalEdit(true);
-                                          }
-                                        }
-                                       />
-                                    </Grid>
-                                    <Grid
-                                    item xs={1}
-                                    >
-                                      <DeleteOutlined
-                                      className="iconDelete"
-                                        fontSize='large'
-                                        onClick={
-                                          (e) => {
-                                            e.stopPropagation();
-                                            setSelectGrup(list);
-                                            setOpenModalDelete(true);
-                                          }
-                                        }
-                                      />
-                                    </Grid>
-                                      
-                                  </Grid>
+                    <Grid container item xs={7.5} justifyContent="flex-end">
+                      <Grid item xs={1}>
+                        <ModeEditOutlineOutlined
+                          className="iconEdit"
+                          fontSize="large"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectGrup(list);
+                            setIsModalEdit(true);
+                          }}
+                        />
+                      </Grid>
+                      <Grid item xs={1}>
+                        <DeleteOutlined
+                          className="iconDelete"
+                          fontSize="large"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectGrup(list);
+                            setOpenModalDelete(true);
+                          }}
+                        />
+                      </Grid>
+                    </Grid>
                   </AccordionSummary>
                 </Accordion>
               </div>
