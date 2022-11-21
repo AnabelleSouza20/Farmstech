@@ -183,6 +183,21 @@ export default function Groups() {
                     </div> */}
                       </Typography>
                     </Grid>
+                    <Grid 
+                                    container
+                                    item xs={12}
+                                    justifyContent="flex-end"
+                                    > 
+                                      <ModeEditOutlineOutlined
+                                        className="iconEdit"
+                                        fontSize='large'
+                                       />
+                                      <DeleteOutlined
+                                      className="iconDelete"
+                                        fontSize='large'
+                                      />
+                                      
+                                  </Grid>
                   </AccordionSummary>
                 </Accordion>
               </div>
