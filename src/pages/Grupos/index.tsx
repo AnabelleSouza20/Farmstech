@@ -27,7 +27,7 @@ import distinct_json from "../../utils/distinct";
 import { Edit, Delete, Padding } from "@mui/icons-material";
 import { ILamp, FormNewGroup } from "../../_types";
 import NewGroup from "../../components/newGroup/NewGroup";
-import "./style.scss";
+import "./styleGrupos.scss";
 import { useNavigate } from "react-router-dom";
 import useApi from "../../hooks/useApi";
 
