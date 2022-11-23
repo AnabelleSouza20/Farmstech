@@ -8,7 +8,7 @@ import {
 } from 'react-azure-maps';
 import { data, MapMouseEvent, PopupOptions } from 'azure-maps-control';
 import { toast } from 'react-toastify';
-import { Popover, RenderPoint } from '../../components/map';
+import {  RenderPoint } from '../../components/map';
 import { RequestBaseProps, PoleProps } from "../../_types";
 import useApi from '../../hooks/useApi';
 // import api from "../../api/api";
@@ -16,6 +16,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Drawer, Box, Typography, CircularProgress } from '@mui/material';
 import "./styles.scss";
 import mapOptions from '../../utils/mapOptions';
+import { bool } from 'yup';
 
 const Mapa = () => {
     const requestApi = useApi();
@@ -24,12 +25,14 @@ const Mapa = () => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [openedPopover, setOpenedPopover] = useState(false);
     const [popupOptions, setPopupOptions] = useState<PopupOptions>({});
-
+    const [isLoading, setLoading] = useState(false);
+    const [lamp1isOn, setLamp1isOn] = useState(false);
+    const [lamp2isOn, setLamp2isOn] = useState(false);
 
     useEffect(() => {
         (async () => {
             try {
-                const response = await requestApi<RequestBaseProps<PoleProps[]>>('/poles-status-dev', "get");
+                const response = await requestApi<RequestBaseProps<PoleProps[]>>('/poles-status', "get");
 
                 if (response && response.data?.FL_STATUS) {
                     setPoles(response.data.data);
@@ -39,11 +42,29 @@ const Mapa = () => {
     }, []);
     useEffect(() => { setOpenedPopover(!!selectedPole); }, [selectedPole])
 
+    const polesRefresh = async () => {
+        try {
+            const response = await requestApi<RequestBaseProps<PoleProps[]>>('/poles-status', "get");
+
+            if (response && response.data?.FL_STATUS) {
+                setPoles(response.data.data);
+            }
+        } catch (err) { }
+    }
+
     async function btnLampada(lamp: string, { device }: any, state: boolean) {
+        console.log(lamp1isOn);
         const paramets = { [lamp]: state, devices: [device] }
-        const response = await requestApi<{FL_STATUS:boolean}>('lamps-aut-dev', "POST", paramets, false);
+        const response = await requestApi<{FL_STATUS:boolean}>('farmstech_aut', "POST", paramets, false);
         if (response?.data && response.data.FL_STATUS){
-            state ? toast.success('Acendeu a Lâmpada!') : toast.info('Desligou a Lâmpada!')
+            state ? toast.success('Acendeu a Lâmpada!'): toast.info('Desligou a Lâmpada!')
+            polesRefresh();
+            setTimeout(() => {
+            setLoading(false);
+            lamp1isOn ? setLamp1isOn(false) : setLamp1isOn(true);
+            console.log(lamp1isOn)
+            }, 1000);
+            
         } else {
             toast.error("Não foi possível acender a Lâmpada!, verifique a conexão")
         }
@@ -53,6 +74,8 @@ const Mapa = () => {
         const pole = poles.find(pole => pole.long === long && pole.lat === lat);
         if (!pole) return;
         setSelectedPole(pole);
+        setLamp1isOn(pole.lamp1);
+        setLamp2isOn(pole.lamp2);
     };
 
     useEffect(() => {
@@ -102,7 +125,8 @@ const Mapa = () => {
                         <Typography  fontWeight='bold'>
                             <h1 className='title'>{selectedPole?.device}</h1> <br/>
                             {selectedPole?.desc.toUpperCase()} <br/> <br/>
-                            LÂMPADA 1: <br/> <button className='itembtn' onClick={() => btnLampada('lamp1', selectedPole, !selectedPole?.lamp1)}> <h4 >{selectedPole?.lamp1 ? 'Desligar' : 'Ligar'}</h4> </button>  <br/> <br/>
+                            LÂMPADA 1: <br/> 
+                            {isLoading ? <CircularProgress /> : <button className='itembtn' onClick={() => {setLoading(true); btnLampada('lamp1', selectedPole, !selectedPole?.lamp1)}}>{lamp1isOn ? 'Desligar' : 'Ligar'}; </button>} <br/> <br/>                            
                             LÂMPADA 2: <br/> <button className='itembtn' onClick={() => btnLampada('lamp1', selectedPole, !selectedPole?.lamp2)}> <h4 >{selectedPole?.lamp2 ? 'Desligar' : 'Ligar'}</h4> </button> <br/> <br/> <br/>
                             LATITUDE: {selectedPole?.lat} <br/>
                             LONGITUDE: {selectedPole?.long} <br/>
