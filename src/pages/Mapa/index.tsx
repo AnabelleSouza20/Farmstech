@@ -25,7 +25,8 @@ const Mapa = () => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [openedPopover, setOpenedPopover] = useState(false);
     const [popupOptions, setPopupOptions] = useState<PopupOptions>({});
-    const [isLoading, setLoading] = useState(false);
+    const [isLoading1, setLoading1] = useState(false);
+    const [isLoading2, setLoading2] = useState(false);
     const [lamp1isOn, setLamp1isOn] = useState(false);
     const [lamp2isOn, setLamp2isOn] = useState(false);
 
@@ -59,11 +60,13 @@ const Mapa = () => {
         if (response?.data && response.data.FL_STATUS){
             state ? toast.success('Acendeu a Lâmpada!'): toast.info('Desligou a Lâmpada!')
             polesRefresh();
-            setTimeout(() => {
-            setLoading(false);
-            lamp1isOn ? setLamp1isOn(false) : setLamp1isOn(true);
-            console.log(lamp1isOn)
-            }, 1000);
+            if (lamp === 'lamp1') {
+                lamp1isOn ? setLamp1isOn(false) : setLamp1isOn(true);
+                setLoading1(false);
+            } else {
+                lamp2isOn ? setLamp2isOn(false) : setLamp2isOn(true);
+                setLoading2(false);
+            }
             
         } else {
             toast.error("Não foi possível acender a Lâmpada!, verifique a conexão")
@@ -126,8 +129,9 @@ const Mapa = () => {
                             <h1 className='title'>{selectedPole?.device}</h1> <br/>
                             {selectedPole?.desc.toUpperCase()} <br/> <br/>
                             LÂMPADA 1: <br/> 
-                            {isLoading ? <CircularProgress /> : <button className='itembtn' onClick={() => {setLoading(true); btnLampada('lamp1', selectedPole, !selectedPole?.lamp1)}}>{lamp1isOn ? 'Desligar' : 'Ligar'}; </button>} <br/> <br/>                            
-                            LÂMPADA 2: <br/> <button className='itembtn' onClick={() => btnLampada('lamp1', selectedPole, !selectedPole?.lamp2)}> <h4 >{selectedPole?.lamp2 ? 'Desligar' : 'Ligar'}</h4> </button> <br/> <br/> <br/>
+                            {isLoading1 ? <CircularProgress /> : <button className='itembtn' onClick={() => {setLoading1(true); btnLampada('lamp1', selectedPole, !selectedPole?.lamp1)}}>{lamp1isOn ? 'Desligar' : 'Ligar'}</button>} <br/> <br/>                            
+                            LÂMPADA 2: <br/> 
+                            {isLoading2 ? <CircularProgress /> : <button className='itembtn' onClick={() => {setLoading2(true); btnLampada('lamp2', selectedPole, !selectedPole?.lamp2)}}>{lamp2isOn ? 'Desligar' : 'Ligar'}</button>} <br/> <br/> <br/>
                             LATITUDE: {selectedPole?.lat} <br/>
                             LONGITUDE: {selectedPole?.long} <br/>
                             TEMPERATURA: {selectedPole?.tempESP}°c<br/>
