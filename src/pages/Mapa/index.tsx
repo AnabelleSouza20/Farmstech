@@ -33,7 +33,7 @@ const Mapa = () => {
     useEffect(() => {
         (async () => {
             try {
-                const response = await requestApi<RequestBaseProps<PoleProps[]>>('/poles-status', "get");
+                const response = await requestApi<RequestBaseProps<PoleProps[]>>('/poles-status-dev', "get");
 
                 if (response && response.data?.FL_STATUS) {
                     setPoles(response.data.data);
