@@ -3,11 +3,6 @@ import Grid from "@mui/material/Grid";
 import {
   Button,
   createTheme,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
   FormControl,
   InputLabel,
   MenuItem,
@@ -35,6 +30,7 @@ import { ILamp, RequestBaseProps } from "../../_types";
 import NewActive from "../../components/newActive/NewActive";
 import EditAssets from "../../components/EditAssets/index";
 import Scheduling from "../../components/Scheduling/index";
+import DeleteAssets from  "../../components/DeleteAssets/DeleteAssets"
 import "./style.scss";
 import useApi from "../../hooks/useApi";
 import { toast } from "react-toastify";
@@ -81,8 +77,7 @@ export default function Ativos() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isModalEdit, setIsModalEdit] = useState(false);
   const [isModalScheduling, setIsModalScheduling] = useState(false);
-  const [confirmDelete, setConfirmDelete] = useState<string>();
-  const [openModalDelete, setOpenModalDelete] = useState(false);
+  const [isModalDelete, setIsModalDelete] = useState(false);
   const [selectPole, setSelectPole] = useState<ILamp>();
   const requestApi = useApi();
   const handleChange = (event: SelectChangeEvent) => {
@@ -134,105 +129,16 @@ export default function Ativos() {
   }
 
   // function to delete assets
-  async function btnDelete(device: string | undefined) {
-    const paramets = { device: device };
-    const res = await requestApi<{ FL_STATUS: boolean; message: string }>(
-      "poles-delete-dev",
-      "delete",
-      paramets
-    );
-    if (!res?.data?.FL_STATUS) {
-      toast.success("Ativo deletado com sucesso");
-    } else {
-      toast.error("ERRO, ativo não foi deletado");
-    }
-    setConfirmDelete("");
-  }
-
-  const textConfirm = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setConfirmDelete(event.target.value);
-  };
-
-  function assetsDelete(device: string | undefined) {
-    if (confirmDelete === device) {
-      btnDelete(device);
-    } else {
-      setConfirmDelete("");
-      toast.error("ERRO, ativo não foi encontrado");
-    }
-  }
+  
 
   return (
     <div>
-      {isModalScheduling ? (
-        <Scheduling
-          onClose={() => setIsModalScheduling(false)}
-          assets={selectPole}
-        />
-      ) : null}
-      {isModalEdit ? (
-        <EditAssets onClose={() => setIsModalEdit(false)} assets={selectPole} />
-      ) : null}
+      {isModalScheduling ? (<Scheduling onClose={() => setIsModalScheduling(false)} assets={selectPole} /> ) : null}
+      {isModalEdit ? ( <EditAssets onClose={() => setIsModalEdit(false)} assets={selectPole} /> ) : null}
+      {isModalDelete?(<DeleteAssets onClose={()=> setIsModalDelete(false)} assets={selectPole?.device}/>):null}
+      
       {/*Modal to confirm asset deletion*/}
-      <div>
-        <Dialog
-          open={openModalDelete}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">
-            <h3>Tem certeza que deseja deletar o ativo:</h3>
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              <p>
-                <strong>Ativo:</strong> {selectPole?.device}
-              </p>
-              <p>
-                <strong>Grupo:</strong> {selectPole?.group}
-              </p>
-              <p>
-                <strong>Descrição:</strong> {selectPole?.desc}
-              </p>
-            </DialogContentText>
-            <DialogContentText>
-              <br />
-              <strong>Digite o nome do ativo que você deseja deletar.</strong>
-            </DialogContentText>
-            <TextField
-              size="small"
-              id="confirmDelete"
-              label="Nome do Ativo"
-              type="text"
-              value={confirmDelete}
-              onChange={textConfirm}
-              variant="standard"
-              color="primary"
-              margin="normal"
-            />
-          </DialogContent>
-          <DialogActions>
-            <Button
-              className="btnConfirmarDelete"
-              onClick={() => {
-                assetsDelete(selectPole?.device);
-                setOpenModalDelete(false);
-              }}
-            >
-              Confirmar
-            </Button>
-            <Button
-              className="btnCancelDelete"
-              onClick={() => {
-                setConfirmDelete("");
-                setOpenModalDelete(false);
-              }}
-            >
-              Cancelar
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </div>
+    
 
       <Grid container spacing={1}>
         <Grid item xs={2}>
@@ -318,178 +224,180 @@ export default function Ativos() {
             if (pole.group === age) {
               return (
                 <div className="accordion">
-                  <Accordion key={pole.device}>
-                    <AccordionSummary
-                      aria-controls="panel1d-content"
-                      id="panel1d-header"
-                    >
-                      <Grid item xs={4}>
-                        <Typography>
-                          {pole.device} <br />
-                          <div
-                            style={{
-                              fontSize: "0.8rem",
-                              color: "grey",
-                            }}
-                          >
-                            última alreração:{" "}
-                            {formatDate(
-                              new Date(pole.datetime),
-                              "DD/MM/YYYY HH:ss"
-                            )}
-                          </div>
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={3}>
-                        <Typography> {pole.group} </Typography>
-                      </Grid>
-                      <Grid item xs={2}>
-                        <ThemeProvider theme={theme}>
-                          <Typography>
-                            <Switch
-                              checked={pole.lamp1 || pole.lamp2 ? true : false}
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                const status =
-                                  pole.lamp1 || pole.lamp2 ? false : true;
-                                btnLamp("allLamps", pole, status);
-                              }}
-                            />
-                          </Typography>
-                        </ThemeProvider>
-                      </Grid>
-                      <Grid
-                        container
-                        item
-                        xs={3}
-                        justifyContent="flex-end"
-                      >
-                        <ModeEditOutlineOutlined
-                          className="iconEdit"
-                          fontSize="large"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setSelectPole(pole);
-                            setIsModalEdit(true);
-                          }}
-                        />
-                        <DeleteOutlined
-                          className="iconDelete"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setSelectPole(pole);
-                            setOpenModalDelete(true);
-                          }}
-                          fontSize="large"
-                        />
-                        <AccessAlarmOutlined
-                          className="iconAlarm"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setSelectPole(pole);
-                            setIsModalScheduling(true);
-                          }}
-                          fontSize="large"
-                        />
-                      </Grid>
-                    </AccordionSummary>
-                    <AccordionDetails>
+                <Accordion key={pole.device}>
+                  <AccordionSummary
+                    aria-controls="panel1d-content"
+                    id="panel1d-header"
+                  >
+                    <Grid item xs={4}>
                       <Typography>
-                        Localização: {pole.desc} <br />
-                        latitude:{pole.lat} <br />
-                        longitude:{pole.long} <br />
-                        <br />{" "}
+                        {pole.device} <br />
+                        <div
+                          style={{
+                            fontSize: "0.8rem",
+                            color: "grey",
+                          }}
+                        >
+                          última alreração:{" "}
+                          {formatDate(
+                            new Date(pole.datetime),
+                            "DD/MM/YYYY HH:ss"
+                          )}
+                        </div>
                       </Typography>
-                    </AccordionDetails>
-                  </Accordion>
-                </div>
+                    </Grid>
+                    <Grid item xs={3}>
+                      <Typography> {pole.group} </Typography>
+                    </Grid>
+                    <Grid item xs={2}>
+                      <ThemeProvider theme={theme}>
+                        <Typography>
+                          <Switch
+                            checked={pole.lamp1 || pole.lamp2 ? true : false}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              const status =
+                                pole.lamp1 || pole.lamp2 ? false : true;
+                              btnLamp("allLamps", pole, status);
+                            }}
+                          />
+                        </Typography>
+                      </ThemeProvider>
+                    </Grid>
+                    <Grid
+                      container
+                      item
+                      xs={3}
+                      justifyContent="flex-end"
+                    >
+                      <ModeEditOutlineOutlined
+                        className="iconEdit"
+                        fontSize="large"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectPole(pole);
+                          setIsModalEdit(true);
+                        }}
+                      />
+                      <DeleteOutlined
+                        className="iconDelete"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectPole(pole);
+                          setIsModalDelete(true)
+                        }}
+                        fontSize="large"
+                      />
+                      <AccessAlarmOutlined
+                        className="iconAlarm"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectPole(pole);
+                          setIsModalScheduling(true);
+                        }}
+                        fontSize="large"
+                      />
+                    </Grid>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Typography>
+                      Localização: {pole.desc} <br />
+                      latitude:{pole.lat} <br />
+                      longitude:{pole.long} <br />
+                      <br />{" "}
+                    </Typography>
+                  </AccordionDetails>
+                </Accordion>
+              </div>
               );
             } else if (age === "" || age === "Todos")
               return (
                 <div className="accordion">
-                  <Accordion key={pole.device}>
-                    <AccordionSummary
-                      aria-controls="panel1d-content"
-                      id="panel1d-header"
-                    >
-                      <Grid item xs={4}>
-                        <Typography>
-                          {pole.device} <br />
-                          <div
-                            style={{
-                              fontSize: "0.8rem",
-                              color: "grey",
-                            }}
-                          >
-                            última alreração:{" "}
-                            {formatDate(
-                              new Date(pole.datetime),
-                              "DD/MM/YYYY HH:ss"
-                            )}
-                          </div>
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={3}>
-                        <Typography> {pole.group} </Typography>
-                      </Grid>
-                      <Grid item xs={2}>
-                        <ThemeProvider theme={theme}>
-                          <Typography>
-                            <Switch
-                              checked={pole.lamp1 || pole.lamp2 ? true : false}
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                const status =
-                                  pole.lamp1 || pole.lamp2 ? false : true;
-                                btnLamp("allLamps", pole, status);
-                              }}
-                            />
-                          </Typography>
-                        </ThemeProvider>
-                      </Grid>
-                      <Grid
-                        container
-                        item
-                        xs={3}
-                        justifyContent="flex-end"
-                        alignItems="center"
-                      >
-                        <ModeEditOutlineOutlined
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setSelectPole(pole);
-                            setIsModalEdit(true);
-                          }}
-                          fontSize="large"
-                        />
-                        <DeleteOutlined
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setSelectPole(pole);
-                            setOpenModalDelete(true);
-                          }}
-                          fontSize="large"
-                        />
-                        <AccessAlarmOutlined
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setSelectPole(pole);
-                            setIsModalScheduling(true);
-                          }}
-                          fontSize="large"
-                        />
-                      </Grid>
-                    </AccordionSummary>
-                    <AccordionDetails>
+                <Accordion key={pole.device}>
+                  <AccordionSummary
+                    aria-controls="panel1d-content"
+                    id="panel1d-header"
+                  >
+                    <Grid item xs={4}>
                       <Typography>
-                        Localização: {pole.desc} <br />
-                        latitude:{pole.lat} <br />
-                        longitude:{pole.long} <br />
-                        <br />{" "}
+                        {pole.device} <br />
+                        <div
+                          style={{
+                            fontSize: "0.8rem",
+                            color: "grey",
+                          }}
+                        >
+                          última alreração:{" "}
+                          {formatDate(
+                            new Date(pole.datetime),
+                            "DD/MM/YYYY HH:ss"
+                          )}
+                        </div>
                       </Typography>
-                    </AccordionDetails>
-                  </Accordion>
-                </div>
+                    </Grid>
+                    <Grid item xs={3}>
+                      <Typography> {pole.group} </Typography>
+                    </Grid>
+                    <Grid item xs={2}>
+                      <ThemeProvider theme={theme}>
+                        <Typography>
+                          <Switch
+                            checked={pole.lamp1 || pole.lamp2 ? true : false}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              const status =
+                                pole.lamp1 || pole.lamp2 ? false : true;
+                              btnLamp("allLamps", pole, status);
+                            }}
+                          />
+                        </Typography>
+                      </ThemeProvider>
+                    </Grid>
+                    <Grid
+                      container
+                      item
+                      xs={3}
+                      justifyContent="flex-end"
+                    >
+                      <ModeEditOutlineOutlined
+                        className="iconEdit"
+                        fontSize="large"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectPole(pole);
+                          setIsModalEdit(true);
+                        }}
+                      />
+                      <DeleteOutlined
+                        className="iconDelete"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectPole(pole);
+                          setIsModalDelete(true)
+                        }}
+                        fontSize="large"
+                      />
+                      <AccessAlarmOutlined
+                        className="iconAlarm"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectPole(pole);
+                          setIsModalScheduling(true);
+                        }}
+                        fontSize="large"
+                      />
+                    </Grid>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Typography>
+                      Localização: {pole.desc} <br />
+                      latitude:{pole.lat} <br />
+                      longitude:{pole.long} <br />
+                      <br />{" "}
+                    </Typography>
+                  </AccordionDetails>
+                </Accordion>
+              </div>
               );
           })}
         </Grid>
