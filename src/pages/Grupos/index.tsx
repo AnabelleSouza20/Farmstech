@@ -3,19 +3,6 @@ import Grid from "@mui/material/Grid";
 import {
   Button,
   createTheme,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-  Switch,
-  TextField,
-  ThemeProvider,
   Typography,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
@@ -26,20 +13,15 @@ import MuiAccordionSummary, {
 } from "@mui/material/AccordionSummary";
 import {
   DeleteOutlined,
-  AccessAlarmOutlined,
   ModeEditOutlineOutlined,
 } from "@mui/icons-material";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
-
-import distinct_json from "../../utils/distinct";
-import { Edit, Delete, Padding } from "@mui/icons-material";
-import { ILamp, FormNewGroup } from "../../_types";
 import NewGroup from "../../components/newGroup/NewGroup";
 import "./styleGrupos.scss";
 import { useNavigate } from "react-router-dom";
 import useApi from "../../hooks/useApi";
-import { toast } from "react-toastify";
 import EditGroup from "../../components/EditGroup/EditGroup";
+import DeleteGroup from "../../components/DeleteGroup/DeleteGroup"
 
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -76,17 +58,12 @@ const AccordionDetails: any = styled(MuiAccordionDetails)(({ theme }) => ({
 }));
 
 export default function Groups() {
-  const [age, setAge] = useState("");
   const [groups, setGroups] = useState<string[]>([]);
   const [isModalGroupVisible, setIsModalGroupVisible] = useState(false);
   const [isModalEdit, setIsModalEdit] = useState(false);
+  const [isModalDelete, setIsModalDelete] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState<string>();
-  const [openModalDelete, setOpenModalDelete] = useState(false);
   const [selectGrup, setSelectGrup] = useState<String>();
-
-  const handleChange = (event: SelectChangeEvent) => {
-    setAge(event.target.value as string);
-  };
 
   const sendApi = useApi();
 
@@ -114,93 +91,16 @@ export default function Groups() {
 
   const navigate = useNavigate();
 
-  async function btnDelete(device: String | undefined) {
-    const paramets = { group: device };
-    const res = await sendApi<{ FL_STATUS: boolean; message: string }>(
-      "groups-delete-dev",
-      "delete",
-      paramets
-    );
-    console.log("teste", paramets);
-    if (res?.data?.FL_STATUS) {
-      toast.success("Grupo deletado com sucesso");
-    } else {
-      toast.error("ERRO, Grupo não foi deletado");
-    }
-    setConfirmDelete("");
-  }
-
-  const textConfirm = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setConfirmDelete(event.target.value);
-  };
-
-  function assetsDelete(device: String | undefined) {
-    if (confirmDelete === device) {
-      btnDelete(device);
-    } else {
-      setConfirmDelete("");
-      toast.error("ERRO, ativo não foi encontrado");
-    }
-  }
-
   return (
-    <div className="menuSuperior">
-      {isModalEdit ? (
+      <div className="menuSuperior">
+        {isModalEdit ? (
         <EditGroup onClose={() => setIsModalEdit(false)} assets={selectGrup} />
       ) : null}
-      <div>
-        <Dialog
-          open={openModalDelete}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">
-            <h3>Tem certeza que deseja deletar o grupo:</h3>
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              <p>
-                <strong>Grupo:</strong> {selectGrup}
-              </p>
-            </DialogContentText>
-            <DialogContentText>
-              <br />
-              <strong>Digite o nome do grupo que você deseja deletar.</strong>
-            </DialogContentText>
-            <TextField
-              size="small"
-              id="confirmDelete"
-              label="Nome do Ativo"
-              type="text"
-              value={confirmDelete}
-              onChange={textConfirm}
-              variant="standard"
-              color="primary"
-              margin="normal"
-            />
-          </DialogContent>
-          <DialogActions>
-            <Button
-              className="btnConfirmarDelete"
-              onClick={() => {
-                assetsDelete(selectGrup);
-                setOpenModalDelete(false);
-              }}
-            >
-              Confirmar
-            </Button>
-            <Button
-              className="btnCancelDelete"
-              onClick={() => {
-                setConfirmDelete("");
-                setOpenModalDelete(false);
-              }}
-            >
-              Cancelar
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </div>
+
+        {isModalDelete ? (
+        <DeleteGroup onClose={() => setIsModalDelete(false)} assets={selectGrup} />
+      ) : null}
+  
 
       <Grid container spacing={2}>
         <Grid item xs={2.3}>
@@ -284,7 +184,7 @@ export default function Groups() {
                           onClick={(e) => {
                             e.stopPropagation();
                             setSelectGrup(list);
-                            setOpenModalDelete(true);
+                            setIsModalDelete(true)
                           }}
                         />
                       </Grid>
