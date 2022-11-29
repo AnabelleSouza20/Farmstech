@@ -2,14 +2,18 @@
 
 .itembtn{
     background:linear-gradient(100deg, rgba(#6038C0, .8) 55%, rgba(#110521, .1)100%);
-    border-radius: 10px;
+    border-radius: 18px;
     border-color: azure;
-    width: 130px;
-    height: 30px;
+    width: 7rem;
+    height: 2.6rem;
     font-family: "Mukta", sans-serif;
     font-weight: bold;
     color: aliceblue;
     cursor: pointer;
+}
+.itembtn:hover{
+    transform: scale(1.1);
+    transition: 0.5s;
 }
 .itensnome{
     font-family: "Mukta", sans-serif;
@@ -19,15 +23,14 @@
 .imagem{ border-radius: 20px; }
 .popup-close{
     color: white;
-    &:hover{ color: plum; }
 }
 .drawer {
         background: linear-gradient(90deg, $color-primary 0%, $color-secondary 99.99%, $color-secondary 100%);
-        width: 100%;
+        display: flex;
+        flex-direction: column;
     }
-.drawer:hover{
-    background: linear-gradient(90deg, $color-primary 0%, $color-secondary 99.99%, $color-secondary 100%);
-    width: 100%;
+.imgatv{
+padding: auto;
 }
 
 .title{
@@ -42,4 +45,15 @@
 .styledtext{
     color:#6038C0;
     font-size: medium;
+}
+
+.lampadasTitle{
+    font-family: "Mukta", sans-serif;
+    color:azure;
+    padding: 30px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    flex-direction: row;
+    display: flex;
+    justify-content: space-between;
 }
