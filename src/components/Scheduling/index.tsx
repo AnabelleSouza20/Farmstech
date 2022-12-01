@@ -7,16 +7,20 @@ import * as yup from "yup";
 import { toast } from "react-toastify";
 import useApi from "../../hooks/useApi";
 
+
+//Validação das informações
 const validationForm = yup.object().shape({
   device: yup.string().required("O NOME é obrigatório"),
   desc: yup.string().required("A REFERÊNCIA é obrigatória"),
   group: yup.string().required("O GRUPO é obrigatório"),
   long: yup.string().required("A LONGITUDE é obrigatória"),
   lat: yup.string().required("A LATITUDE é obrigatória"),
-  
+
 });
 
-function NewActive({onClose, assets}:NewActiveProps) {
+
+
+function NewActive({ onClose, assets }: NewActiveProps) {
   const {
     register,
     handleSubmit,
@@ -44,56 +48,57 @@ function NewActive({onClose, assets}:NewActiveProps) {
   };
 
   return (
-    <main>      
-        <div className="cards">
-          <h4 className="title">Agendamento</h4>
-          <h4 className="assets">{assets?.device}</h4>
+    <main>
+      <div className="cards">
+        <h4 className="title">Agendamento</h4>
+        <h4 className="assets">{assets?.device}</h4>
 
-          <form className="form" onSubmit={handleSubmit(onSubmit)}>
-            <div className="display-form">
-              <label className="label" htmlFor="device">
-                Data:
-              </label>
-              <input
-                {...register("device")}
-                className="input"
-                id="device"
-                type="date"
-              />
-              <p className="error-message">{errors.device?.message}</p>
-              
-              <label className="label" htmlFor="desc">
-                Inicio:
-              </label>
-              <input
-                {...register("desc")}
-                className="input"
-                id="desc"
-                type="time"
-              />
-              <p className="error-message">{errors.desc?.message}</p>
+        <form className="form" onSubmit={handleSubmit(onSubmit)}>
+          <div className="display-form">
+            <label className="label" htmlFor="device">
+              Data:
+            </label>
+            <input
+              {...register("device")}
+              className="input"
+              id="device"
+              type="date"
+            />
+            <p className="error-message">{errors.device?.message}</p>
 
-              <label className="label" htmlFor="group">
-                Fim:
-              </label>
-              <input
-                {...register("group")}
-                className="input"
-                id="group"
-                type="time"
-              />
-              <p className="error-message">{errors.group?.message}</p>
+            <label className="label" htmlFor="desc">
+              Inicio:
+            </label>
+            <input
+              {...register("desc")}
+              className="input"
+              id="desc"
+              type="time"
+            />
+            <p className="error-message">{errors.desc?.message}</p>
 
-              <label className="label" htmlFor="long">
-                Repetir:
-              </label>
-              <input
-                {...register("long")}
-                className="input"
-                id="long"
-                type="text"
-              />
-              <p className="error-message">{errors.long?.message}</p>
+            <label className="label" htmlFor="group">
+              Fim:
+            </label>
+            <input
+              {...register("group")}
+              className="input"
+              id="group"
+              type="time"
+            />
+            <p className="error-message">{errors.group?.message}</p>
+            </div>
+
+            <div className= "demo-simple-select-label">
+              <select>
+                <option value={1}>Segunda-Feira</option>
+                <option value={2}>Terça-Feira</option>
+                <option value={3}>Quarta-Feira</option>
+                <option value={4}>Quinta-Feira</option>
+                <option value={5}>Sexta-Feira</option>
+                <option value={6}>Sábado</option>
+                <option value={7}>Domingo</option>
+              </select>
             </div>
 
             <div className="btn">
@@ -109,9 +114,9 @@ function NewActive({onClose, assets}:NewActiveProps) {
                 </button>
               </div>
             </div>
-          </form>
-        </div>
-     
+        </form>
+      </div>
+
     </main>
   );
 }
