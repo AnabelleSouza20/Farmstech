@@ -10,12 +10,10 @@ import useApi from "../../hooks/useApi";
 
 //Validação das informações
 const validationForm = yup.object().shape({
-  device: yup.string().required("O NOME é obrigatório"),
-  desc: yup.string().required("A REFERÊNCIA é obrigatória"),
-  group: yup.string().required("O GRUPO é obrigatório"),
-  long: yup.string().required("A LONGITUDE é obrigatória"),
-  lat: yup.string().required("A LATITUDE é obrigatória"),
-
+  device: yup.string().required("Data obrigatória"),
+  desc: yup.string().required("Hora inicial obrigatória"),
+  group: yup.string().required("Hora final obrigatória"),
+ 
 });
 
 
@@ -89,7 +87,7 @@ function NewActive({ onClose, assets }: NewActiveProps) {
             <p className="error-message">{errors.group?.message}</p>
             </div>
 
-            <div className= "demo-simple-select-label">
+            {/* <div className= "demo-simple-select-label">
               <select>
                 <option value={1}>Segunda-Feira</option>
                 <option value={2}>Terça-Feira</option>
@@ -99,7 +97,7 @@ function NewActive({ onClose, assets }: NewActiveProps) {
                 <option value={6}>Sábado</option>
                 <option value={7}>Domingo</option>
               </select>
-            </div>
+            </div> */}
 
             <div className="btn">
               <div>
