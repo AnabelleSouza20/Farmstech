@@ -180,9 +180,9 @@ const Mapa = () => {
               >
               </div>
               {isRendered ? (
-              <NewActive onClose={function (): void {
-          throw new Error("Function not implemented.");
-        } } assets={undefined} />
+              <NewActive onClose={() => setIsRendered(false)
+        } assets={undefined}
+        />
               ) : ( null )}
           <AccessTimeIcon
           fontSize="large"
