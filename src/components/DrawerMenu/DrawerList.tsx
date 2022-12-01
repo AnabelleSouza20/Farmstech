@@ -10,7 +10,7 @@ export default function DrawerList() {
     return (
 
         <>
-            <a href='/' className='a-not-effect'><img src={logoPng} className="logo" alt="" /></a>
+            <a href='/' className='a-not-effect'><img src={logoPng} className="logo" alt="logo" /></a>
             <List className='menu-list'>
                 {MenuItemsJSON.map(item => (
                     // <ListItem key={item.name} className={`mb-4 ${item.name === "Sair" && "mt-5"}`} disablePadding>
