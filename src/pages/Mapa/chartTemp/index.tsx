@@ -12,8 +12,8 @@ export default function Chart(pole: any) {
     const [ambTemp, setAmbTemp] = useState<influxPropsTemp[]>([]);
     const [options, setOptions] = useState<Props>({
         type: 'line',
-        width: '100%',
-        height: 350,
+        width: '600px',
+        height: 300,
         options:{
               yaxis: {
                 labels: {
@@ -100,13 +100,6 @@ export default function Chart(pole: any) {
     }
     return (
         <>
-            <div>
-                <h1
-                onClick={() => console.log(pole.pole.device)}
-                >
-                    Temperatura {pole.pole.device}
-                </h1>
-            </div>
             <ApexChart {...options} />
         </>
     )

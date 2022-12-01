@@ -1,12 +1,12 @@
 .cards {
     position:absolute;
     width: 450px;
-    height: 450px;
+    height: 300px;
     display: grid;
     grid-template-rows: 0.3fr 3fr auto-fit;        
     text-align:center;
-    left: 28em;
-    top: 8em;
+    left: 13% !important;
+    top: 10%;
     padding-top: 12px;
     background:linear-gradient(90deg, rgba(#1B0536, 0.8) 40%, rgba(#110521, 0.3)100%);
     background-color: #6039BF !important;

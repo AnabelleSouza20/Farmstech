@@ -20,18 +20,13 @@
     color: white;
     font-size: 15px;
 }
-.imagem{ border-radius: 20px; }
 .popup-close{
     color: white;
 }
 .drawer {
+        padding-top: 30px;
         background: linear-gradient(90deg, $color-primary 0%, $color-secondary 99.99%, $color-secondary 100%);
-        display: flex;
-        flex-direction: column;
     }
-.imgatv{
-padding: auto;
-}
 
 .title{
     font-family: "Mukta", sans-serif;
@@ -48,12 +43,51 @@ padding: auto;
 }
 
 .lampadasTitle{
+    padding: 30px;
     font-family: "Mukta", sans-serif;
     color:azure;
-    padding: 30px;
-    padding-bottom: 10px;
-    padding-top: 10px;
     flex-direction: row;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 200px;
+}
+.drawerimg{
+    background-color: linear-gradient(90deg, $color-primary 0%, $color-secondary 99.99%, $color-secondary 100%);
+    border-radius: 20px;
+    padding-top: 30px;
+}
+
+.chart{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.imgheader{
+    font-family: "Mukta", sans-serif;
+    color:azure;
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    padding-bottom: 0px;
+}
+
+
+.timeIcon{
+    background:linear-gradient(100deg, rgba(#6038C0, .8) 55%, rgba(#110521, .1)100%);
+    border-color: azure;
+    font-family: "Mukta", sans-serif;
+    font-weight: bold;
+    border-radius: 100%;
+    color: aliceblue;
+    cursor: pointer;
+}
+
+.timeIcon:hover{
+    transform: scale(1.2);
+    transition: 0.5s;
+}
+.timeIcon:not(:hover){
+    transform: scale(1);
+    transition: 0.5s;
 }

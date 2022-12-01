@@ -18,6 +18,8 @@ import "./styles.scss";
 import mapOptions from "../../utils/mapOptions";
 import simprao_imagem from "../../assets/img/simprao_imagem.jpg";
 import Chart from "./chartTemp";
+import NewActive from "../../components/Scheduling";
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
 
 const Mapa = () => {
@@ -31,6 +33,7 @@ const Mapa = () => {
   const [isLoading2, setLoading2] = useState(false);
   const [lamp1isOn, setLamp1isOn] = useState(false);
   const [lamp2isOn, setLamp2isOn] = useState(false);
+  const [isRendered, setIsRendered] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -134,10 +137,8 @@ const Mapa = () => {
             alignItems: "center",
           }}
         >
-          <Box className="drawer" width="100%" height="100%" textAlign="center">
-            <Typography fontWeight="bold">
-              <h1 className="title">{selectedPole?.device}</h1> <br />
-              {selectedPole?.desc.toUpperCase()} <br /> <br />
+          <Box className="drawer" textAlign="center">
+            <h1>{selectedPole?.device}</h1>
               <div className="lampadasTitle">
                 <h3>
                   Lâmpada 1 <br />
@@ -170,26 +171,38 @@ const Mapa = () => {
                     >
                       {lamp2isOn ? "Desligar" : "Ligar"}
                     </button>
-                  )}{" "}
+                  )}
                   <br /> <br /> <br />
                 </h3>
               </div>
-              LATITUDE: {selectedPole?.lat} <br />
-              LONGITUDE: {selectedPole?.long} <br />
-              TEMPERATURA: {selectedPole?.tempESP}°c
-              <br />
+              <div
+              className="newActive"
+              >
+              </div>
+              {isRendered ? (
+              <NewActive onClose={function (): void {
+          throw new Error("Function not implemented.");
+        } } assets={undefined} />
+              ) : ( null )}
+          <AccessTimeIcon
+          fontSize="large"
+          className="timeIcon"
+          onClick={() => setIsRendered(true)}
+          />
               <Chart
+              className="chart"
               pole={selectedPole}
               />
-            </Typography>
-
             <div
-            className="chart"
+            className="imgheader"
             >
+              <h2>{selectedPole?.desc}</h2>
             </div>
-              <img height={400} width={600} src={simprao_imagem}></img>
+              <img height={300} width={500} src={simprao_imagem}
+              className="drawerimg"></img>
             
           </Box>
+  
         </Drawer>
 
         <AzureMap
