@@ -35,7 +35,7 @@ export default function Chart(pole: any) {
     const influxInit = () => {
 
         InfluxDB("SELECT * FROM Temp_Device WHERE device = '" + pole.pole.device + "' AND time > now() - 365d").then(result =>  setTermpAssets(result) );
-        InfluxDB("SELECT * FROM Temp_Amb WHERE time > now() - 365d").then(result =>  setAmbTemp(result) );
+        InfluxDB("SELECT * FROM ambTemp WHERE time > now() - 365d").then(result =>  setAmbTemp(result) );
     }
 
     useEffect(() => {
