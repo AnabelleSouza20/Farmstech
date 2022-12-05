@@ -14,8 +14,8 @@
 
 /* Descrição da Pagina*/
 .iconPage{
-    width: 8vw;
-    height:20vh;
+    width: 31%;
+    height: 31%;
 }
 .logo{
     padding-top: 10px;
@@ -36,4 +36,28 @@
 }
 .descLazer{
     margin-top: 10vh;
+}
+
+@media screen and (max-width: 768px) {
+    .iconPage{
+        width: 80%;
+        height: 80%;
+    }
+    .logo{
+        padding-top: 10px;
+        padding-left: 50px;
+        width: 100px;
+    }
+    .titulo{
+        font-size: 20px;
+    }
+    .desc{
+        font-size: 15px;
+    }
+    .descHome{
+        margin-top: 15vh;
+    }
+    .descLazer{
+        margin-top: 5vh;
+    }
 }

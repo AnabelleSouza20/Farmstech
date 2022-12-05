@@ -106,17 +106,19 @@ const Mapa = () => {
   }, [selectedPole]);
 
   //extração de longitude e latitude do primeiro ativo carregado
-  const lati = parseFloat(poles[3]?.lat || "0");
-  const longi = parseFloat(poles[3]?.long || "0");
+  const lati = parseFloat(poles[2]?.lat || "0");
+  const longi = parseFloat(poles[2]?.long || "0");
 
   return (
-    <AzureMapsProvider>
+    <AzureMapsProvider
+    >
       <div
         style={{
           height: "100vh",
           width: "100vw",
         }}
       >
+        {selectedPole && (
         <ArrowBackIcon
           onClick={() => setIsDrawerOpen(true)}
           className="arrow"
@@ -129,6 +131,7 @@ const Mapa = () => {
             cursor: "pointer",
           }}
         ></ArrowBackIcon>
+        )}
         <Drawer
           anchor="right"
           open={isDrawerOpen}
