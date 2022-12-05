@@ -133,8 +133,6 @@ export default function Ativos() {
 
   return (
     <div>
-      {isModalScheduling ? (<Scheduling onClose={() => setIsModalScheduling(false)} assets={selectPole} /> ) : null}
-      {isModalEdit ? ( <EditAssets onClose={() => setIsModalEdit(false)} assets={selectPole} /> ) : null}
       {isModalDelete?(<DeleteAssets onClose={()=> setIsModalDelete(false)} assets={selectPole?.device}/>):null}
       
       {/*Modal to confirm asset deletion*/}

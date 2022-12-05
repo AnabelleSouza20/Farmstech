@@ -181,7 +181,7 @@ const Mapa = () => {
               </div>
               {isRendered ? (
               <NewActive onClose={() => setIsRendered(false)
-        } assets={undefined}
+        } assets={undefined} pole={selectedPole}
         />
               ) : ( null )}
           <AccessTimeIcon

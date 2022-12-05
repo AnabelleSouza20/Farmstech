@@ -63,6 +63,15 @@ export type PoleProps = {
     turnedBy: string
 }
 
+export type ScheduleProps = {
+    date: string
+    device: string
+    hour: string
+    scheduleEnd: string
+    scheduleStart: string
+    status: boolean
+}
+
 export type MenuProps= {​​​​
     "name":string
     "icon"?:React.ReactNode
@@ -98,6 +107,7 @@ export type FormEditGroup ={
 export type NewActiveProps = {
     onClose: () => void;
     assets: ILamp  | undefined;
+    pole: PoleProps | undefined;
     };
 
     export type EditGrupProps = {

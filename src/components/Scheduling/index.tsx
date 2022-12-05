@@ -6,6 +6,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { toast } from "react-toastify";
 import useApi from "../../hooks/useApi";
+import { PoleProps, ScheduleProps } from "../../_types";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 
 //Validação das informações
@@ -16,9 +19,23 @@ const validationForm = yup.object().shape({
  
 });
 
+/*
+GET - http://52.226.69.167:5002/schedule-status-dev
 
+POST - http://52.226.69.167:5002/schedule-create-dev
 
-function NewActive({ onClose, assets }: NewActiveProps) {
+"device": "teste2", "data": "2022-11-08", "scheduleStart": "20:25:21", "scheduleEnd": "20:25:21", "status": false
+
+DELETE - http://52.226.69.167:5002/schedule-delete-dev
+
+"device": "teste"
+
+PUT - http://52.226.69.167:5002/schedule-update-dev
+
+"alter": "teste2", "device": "teste21", "data": "2022-11-08", "scheduleStart": "20:25:21", "scheduleEnd": "20:25:21", "status": false
+*/
+
+function NewActive({ onClose, assets, pole }: NewActiveProps) {
   const {
     register,
     handleSubmit,
@@ -27,31 +44,27 @@ function NewActive({ onClose, assets }: NewActiveProps) {
   } = useForm<FormNewActive>({
     resolver: yupResolver(validationForm),
   });
-
+  const [ScheduleData, setScheduleData] = useState<ScheduleProps>({} as ScheduleProps);
+  const [selectedPole, setSelectedPole] = useState<PoleProps>({} as PoleProps);
   const sendApi = useApi();
 
-  const onSubmit = async (data: any) => {
-    const res = await sendApi<{ FL_STATUS: boolean; message: string }>(
-      "poles-update-dev/byfront",
-      "put",
-      data
+  //get schedule-status-dev using axios
+  const getSchedule = async () => {
+    const response = await axios.get(
+      "schedule-status-dev"
     );
-    if (res?.data?.FL_STATUS) {
-      reset();
-      toast.success("Ativo Editado com sucesso");
-      onClose()
-    } else {
-      toast.error("ERRO, ativo não foi editado");
-    }
+    setScheduleData(response.data);
   };
 
+  getSchedule();
+  console.log(ScheduleData);
   return (
     <main>
       <div className="cards">
         <h4 className="title">Agendamento</h4>
         <h4 className="assets">{assets?.device}</h4>
 
-        <form className="form" onSubmit={handleSubmit(onSubmit)}>
+        <form className="form">
           <div className="display-form">
             <label className="label" htmlFor="device">
               Data:
