@@ -186,7 +186,7 @@ const Mapa = () => {
               className="newActive"
               >
               </div>
-              {/**  renderização condicional do formulário de agendamento */}
+              {/**  renderização condicional do formulário de agendamento. */}
               {isRendered ? (
               <NewActive onClose={() => setIsRendered(false)
         } assets={undefined} pole={selectedPole}
