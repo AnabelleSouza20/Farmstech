@@ -62,8 +62,6 @@ function NewActive({ onClose, assets, pole }: NewActiveProps) {
     <main>
       <div className="cards">
         <h4 className="title">Agendamento</h4>
-        <h4 className="assets">{assets?.device}</h4>
-
         <form className="form">
           <div className="display-form">
             <label className="label" htmlFor="device">
@@ -114,7 +112,11 @@ function NewActive({ onClose, assets, pole }: NewActiveProps) {
 
             <div className="btn">
               <div>
-                <button className="btn-save" type="submit">
+                <button className="btn-save" type="submit"
+                onClick={() => {
+                  toast.success("Agendamento realizado com sucesso!");
+                }}
+                >
                   Salvar
                 </button>
               </div>

@@ -141,7 +141,11 @@ const Mapa = () => {
           }}
         >
           <Box className="drawer" textAlign="center">
-            <h1>{selectedPole?.device}</h1>
+            <h1>{selectedPole?.device}   <AccessTimeIcon
+          fontSize="large"
+          className="timeIcon"
+          onClick={() => setIsRendered(true)}
+          /></h1>
               <div className="lampadasTitle">
                 <h3>
                   Lâmpada 1 <br />
@@ -182,16 +186,12 @@ const Mapa = () => {
               className="newActive"
               >
               </div>
+              {/**  renderização condicional do formulário de agendamento */}
               {isRendered ? (
               <NewActive onClose={() => setIsRendered(false)
         } assets={undefined} pole={selectedPole}
         />
               ) : ( null )}
-          <AccessTimeIcon
-          fontSize="large"
-          className="timeIcon"
-          onClick={() => setIsRendered(true)}
-          />
               <Chart
               className="chart"
               pole={selectedPole}
