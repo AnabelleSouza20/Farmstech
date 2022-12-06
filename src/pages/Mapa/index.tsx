@@ -106,8 +106,8 @@ const Mapa = () => {
   }, [selectedPole]);
 
   //extração de longitude e latitude do primeiro ativo carregado
-  const lati = parseFloat(poles[2]?.lat || "0");
-  const longi = parseFloat(poles[2]?.long || "0");
+  const lati = parseFloat(poles[1]?.lat || "0");
+  const longi = parseFloat(poles[1]?.long || "0");
 
   return (
     <AzureMapsProvider
