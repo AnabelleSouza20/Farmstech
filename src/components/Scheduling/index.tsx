@@ -1,4 +1,4 @@
-
+import react from "react";
 import { FormNewActive, NewActiveProps } from "../../_types";
 import "./styles.scss";
 import { useForm } from "react-hook-form";
@@ -46,6 +46,11 @@ function NewActive({ onClose, assets, pole }: NewActiveProps) {
   });
   const [ScheduleData, setScheduleData] = useState<ScheduleProps>({} as ScheduleProps);
   const [selectedPole, setSelectedPole] = useState<PoleProps>({} as PoleProps);
+  const [selectDate, setSelectDate] = useState<string>("");
+  const [scheduleStart, setScheduleStart] = useState<string>("");
+  const [scheduleEnd, setScheduleEnd] = useState<string>("");
+  const [status, setStatus] = useState<boolean>(false);
+
   const sendApi = useApi();
 
   //get schedule-status-dev using axios
@@ -55,9 +60,23 @@ function NewActive({ onClose, assets, pole }: NewActiveProps) {
     );
     setScheduleData(response.data);
   };
+  //post to http://52.226.69.167:5002/schedule-create-dev
+  const newSchedule = async () => {
+    const response = await axios.post(
+      "http://52.226.69.167:5002/schedule-create-dev",
+      {
+        device: pole?.device,
+        data: selectDate,
+        scheduleStart: scheduleStart,
+        scheduleEnd: scheduleEnd,
+        status: true,
+      }
+    );
+    setSelectDate("");
+    setScheduleStart("");
+    setScheduleEnd("");
+  };
 
-  getSchedule();
-  console.log(ScheduleData);
   return (
     <main>
       <div className="cards">
@@ -68,7 +87,7 @@ function NewActive({ onClose, assets, pole }: NewActiveProps) {
               Data:
             </label>
             <input
-              {...register("device")}
+              onChange={(e) => setSelectDate(e.target.value)}
               className="input"
               id="device"
               type="date"
@@ -79,7 +98,7 @@ function NewActive({ onClose, assets, pole }: NewActiveProps) {
               Inicio:
             </label>
             <input
-              {...register("desc")}
+              onChange={(e) => setScheduleStart(e.target.value)}
               className="input"
               id="desc"
               type="time"
@@ -90,7 +109,7 @@ function NewActive({ onClose, assets, pole }: NewActiveProps) {
               Fim:
             </label>
             <input
-              {...register("group")}
+              onChange={(e) => setScheduleEnd(e.target.value)}
               className="input"
               id="group"
               type="time"
@@ -112,8 +131,11 @@ function NewActive({ onClose, assets, pole }: NewActiveProps) {
 
             <div className="btn">
               <div>
-                <button className="btn-save" type="submit"
-                onClick={() => {
+                <button className="btn-save"
+                
+                onClick={(e) => {
+                  e.preventDefault();
+                  newSchedule();
                   toast.success("Agendamento realizado com sucesso!");
                 }}
                 >
@@ -133,5 +155,6 @@ function NewActive({ onClose, assets, pole }: NewActiveProps) {
     </main>
   );
 }
+
 
 export default NewActive;
