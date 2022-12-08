@@ -117,7 +117,6 @@ export default function Ativos() {
   // Turns the asset lights on and off
   async function btnLamp(lamp: string, { device }: ILamp, state: boolean) {
     const paramets = { [lamp]: state, devices: [device] };
-    console.log(paramets);
     const res = await requestApi<{ FL_STATUS: boolean; message: string }>(
       "lamps-aut-dev",
       "post",
