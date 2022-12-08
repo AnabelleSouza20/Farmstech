@@ -11,14 +11,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { CircularProgress } from "@mui/material";
 
-//Validação das informações
-const validationForm = yup.object().shape({
-  device: yup.string().required("Data obrigatória"),
-  desc: yup.string().required("Hora inicial obrigatória"),
-  group: yup.string().required("Hora final obrigatória"),
- 
-});
-
 /*
 GET - http://52.226.69.167:5002/schedule-status-dev
 
@@ -42,7 +34,6 @@ function NewActive({ onClose, assets, pole }: NewActiveProps) {
     reset,
     formState: { errors },
   } = useForm<FormNewActive>({
-    resolver: yupResolver(validationForm),
   });
   const [SchedulesData , setScheduleData] = useState<any>();
   const [selectedPole, setSelectedPole] = useState<PoleProps>({} as PoleProps);
@@ -126,6 +117,18 @@ function NewActive({ onClose, assets, pole }: NewActiveProps) {
   useEffect(() => {
     findPole();
   }, [SchedulesData]);
+
+  //check if the date is valid, can't be in the past
+  const checkDate = ( date: string ) => {
+    const today = new Date();
+    const dateToCheck = new Date(date);
+    if (dateToCheck < today) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
  
   return (
     <main>
@@ -189,10 +192,16 @@ function NewActive({ onClose, assets, pole }: NewActiveProps) {
                 <button className="btn-save"
                 
                 onClick={(e) => {
-                  setIsLoading2(true);
-                  updateSchedule();
                   e.preventDefault();
-                }}
+                  if (!checkDate(selectDate)) {
+                    toast.error("Data inválida!");
+                  } else if (scheduleStart > scheduleEnd) {
+                    toast.error("Horário inválido!");
+                  } else {
+
+                   setIsLoading2(true);
+                  updateSchedule();
+                }}}
                 >
                   Atualizar
   
