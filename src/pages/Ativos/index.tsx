@@ -285,15 +285,7 @@ export default function Ativos() {
                         }}
                         fontSize="large"
                       />
-                      <AccessAlarmOutlined
-                        className="iconAlarm"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setSelectPole(pole);
-                          setIsModalScheduling(true);
-                        }}
-                        fontSize="large"
-                      />
+                     
                     </Grid>
                   </AccordionSummary>
                   <AccordionDetails>
@@ -374,15 +366,7 @@ export default function Ativos() {
                         }}
                         fontSize="large"
                       />
-                      <AccessAlarmOutlined
-                        className="iconAlarm"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setSelectPole(pole);
-                          setIsModalScheduling(true);
-                        }}
-                        fontSize="large"
-                      />
+                      
                     </Grid>
                   </AccordionSummary>
                   <AccordionDetails>

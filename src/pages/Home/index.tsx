@@ -68,30 +68,6 @@ export default function Home() {
           <Button
             id="fade-button"
             className="btnMenu"
-            aria-controls={open ? "fade-menu" : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? "true" : undefined}
-            onClick={handleClick}
-          >
-            Métricas
-          </Button>
-          <Menu
-            id="fade-menu"
-            MenuListProps={{
-              "aria-labelledby": "fade-button",
-            }}
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-            TransitionComponent={Fade}
-          >
-            <MenuItem onClick={handleClose}>Energia</MenuItem>
-            <MenuItem onClick={handleClose}>Horas Ligadas</MenuItem>
-            <MenuItem ><a href="/dash" className="a-not-effect">Temperatura</a></MenuItem>
-          </Menu>
-          <Button
-            id="fade-button"
-            className="btnMenu"
             aria-controls={open2 ? "fade-menu" : undefined}
             aria-haspopup="true"
             aria-expanded={open2 ? "true" : undefined}

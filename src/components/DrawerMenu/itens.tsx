@@ -10,16 +10,6 @@ const MenuItemsJSON: MenuProps[] = [
         "link": "/",
     },
     {
-        "name": "Métricas",
-        "icon": <Addchart/>,
-        "isCentralized": false,
-        "Submenus": [{ 
-            "name": "Consumo de Energia",
-            "isCentralized": false,
-            "link": "/dash", 
-        }]
-    },
-    {
         "name": "Automação",
         "icon": <Settings/>,
         "isCentralized": false,
