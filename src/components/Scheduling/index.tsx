@@ -27,7 +27,7 @@ PUT - http://52.226.69.167:5002/schedule-update-dev
 "alter": "teste2", "device": "teste21", "data": "2022-11-08", "scheduleStart": "20:25:21", "scheduleEnd": "20:25:21", "status": false
 */
 
-function NewActive({ onClose, assets, pole }: NewActiveProps) {
+function Scheduling({ onClose, assets, pole }: NewActiveProps) {
   const {
     register,
     handleSubmit,
@@ -235,4 +235,4 @@ function NewActive({ onClose, assets, pole }: NewActiveProps) {
 }
 
 
-export default NewActive;
+export default Scheduling;

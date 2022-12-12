@@ -15,7 +15,7 @@ const validationForm = yup.object().shape({
   lat: yup.string().required("A LATITUDE é obrigatória"),
 });
 
-function NewActive({onClose, assets}:NewActiveProps) {
+function EditAssets({onClose, assets}:any) {
   const {
     register,
     handleSubmit,
@@ -131,4 +131,4 @@ function NewActive({onClose, assets}:NewActiveProps) {
   );
 }
 
-export default NewActive;
+export default EditAssets;

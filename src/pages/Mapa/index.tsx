@@ -18,7 +18,7 @@ import "./styles.scss";
 import mapOptions from "../../utils/mapOptions";
 import simprao_imagem from "../../assets/img/simprao_imagem.jpg";
 import Chart from "./chartTemp";
-import NewActive from "../../components/Scheduling";
+import Scheduling from "../../components/Scheduling";
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
 
@@ -181,13 +181,9 @@ const Mapa = () => {
                   <br /> <br /> <br />
                 </h3>
               </div>
-              <div
-              className="newActive"
-              >
-              </div>
               {/**  renderização condicional do formulário de agendamento. */}
               {isRendered ? (
-              <NewActive onClose={() => setIsRendered(false)
+              <Scheduling onClose={() => setIsRendered(false)
         } assets={undefined} pole={selectedPole}
         />
               ) : ( null )}
