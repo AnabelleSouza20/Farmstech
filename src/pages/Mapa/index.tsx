@@ -69,7 +69,7 @@ const Mapa = () => {
   async function btnLampada(lamp: string, { device }: any, state: boolean) {
     const paramets = { [lamp]: state, devices: [device] };
     const response = await requestApi<{ FL_STATUS: boolean }>(
-      "farmstech_aut",
+      "lamps-aut-dev",
       "POST",
       paramets,
       false
