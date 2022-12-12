@@ -1,18 +1,19 @@
 .cards {
     position:absolute;
     width: 450px;
-    height: 620px;
+    height: 620px !important;  
     display: grid;
     grid-template-rows: 0.3fr 3fr;        
     text-align:center;
-    left: 28em;
-    top: 8em;
+    left: 30em !important;
+    top: 2em;
+    bottom: 0 !important;
     padding-top: 12px;
+    padding-left: 0px;
     background:linear-gradient(90deg, rgba(#1B0536, 1) 50%, rgba(#110521, 1)100%);
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 1.5rem;
-    z-index: 1;   
-    padding-bottom: 20px;    
+    z-index: 1;    
 }
 .error-message{     
     font-size:medium;
@@ -26,7 +27,7 @@
     color: #FFFFFF;
 }
 .form{
-   
+
     display:flex;
     flex-wrap: wrap;
     justify-content: space-around;
