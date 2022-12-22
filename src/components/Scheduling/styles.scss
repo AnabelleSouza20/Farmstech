@@ -1,17 +1,15 @@
-.cards {
+.cards_agend {
     width: 450px;
-    height: 400px !important;
+    height: 440px !important;
     display: grid;
     grid-template-rows: 0.3fr 3fr auto-fit;        
     text-align:center;
-    left: 13% !important;
-    top: 20%;
-    padding-top: 12px;
     background:linear-gradient(90deg, rgba(#1B0536, 0.8) 40%, rgba(#110521, 0.3)100%);
     background-color: #6039BF !important;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 1.5rem;
     margin-top: 50px;
+    margin-left: 70px;
     z-index: 10 !important;       
 }
 
@@ -37,19 +35,19 @@
     color: #FFFFFF;
 }
 
-.form{
+.form_agend{
    
     display:flex;
     flex-wrap: wrap;
     justify-content: space-around;
 }
 
-.display-form{
+.display-form-agend{
     width: 390px;
     text-align: start; 
 }
 
-.label{
+.label-agend{
     font-size:large;
     font-family: "Saira", sans-serif;
     color: #FFFFFF;
@@ -57,7 +55,7 @@
 }
 
 
-.input{
+.input-agend{
     width: 24rem;
     height: 2.3rem;
     border:none;

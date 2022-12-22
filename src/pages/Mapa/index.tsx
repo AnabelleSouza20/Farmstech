@@ -145,6 +145,12 @@ const Mapa = () => {
           className="timeIcon"
           onClick={() => setIsRendered(true)}
           /></h1>
+          {/**  renderização condicional do formulário de agendamento. */}
+          {isRendered ? (
+              <Scheduling onClose={() => setIsRendered(false)
+        } assets={undefined} pole={selectedPole}
+        />
+              ) : ( null )}
               <div className="lampadasTitle">
                 <h3>
                   Lâmpada 1 <br />
@@ -181,12 +187,7 @@ const Mapa = () => {
                   <br /> <br /> <br />
                 </h3>
               </div>
-              {/**  renderização condicional do formulário de agendamento. */}
-              {isRendered ? (
-              <Scheduling onClose={() => setIsRendered(false)
-        } assets={undefined} pole={selectedPole}
-        />
-              ) : ( null )}
+              
               <Chart
               className="chart"
               pole={selectedPole}
