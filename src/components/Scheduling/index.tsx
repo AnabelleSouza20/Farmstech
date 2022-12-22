@@ -134,14 +134,14 @@ function Scheduling({ onClose, assets, pole }: NewActiveProps) {
     <main>
       <div className="cards_agend">
         <h4 className="title">Agendamento</h4>
-        <form className="form">
-          <div className="display-form">
-            <label className="label" htmlFor="device">
+        <form className="form_agend">
+          <div className="display-form-agend">
+            <label className="label-agend" htmlFor="device">
               Data:
             </label>
             <input
               onChange={(e) => setSelectDate(e.target.value)}
-              className="input"
+              className="input-agend"
               id="device"
               type="date"
             />
