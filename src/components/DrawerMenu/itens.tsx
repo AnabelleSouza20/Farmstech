@@ -28,12 +28,14 @@ const MenuItemsJSON: MenuProps[] = [
             "name": "Grupos",
             "isCentralized": false,
             "link": "/grupos"
-        }
+        }, 
     ]
         
     
         
     },
+    
+
     
    
     // {

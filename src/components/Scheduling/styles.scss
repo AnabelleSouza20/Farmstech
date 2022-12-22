@@ -1,12 +1,13 @@
-.cards {
+.cards_agend {
     width: 450px;
     height: 400px !important;
     display: grid;
     grid-template-rows: 0.3fr 3fr auto-fit;        
     text-align:center;
     left: 13% !important;
-    top: 20%;
+    top: 40%;
     padding-top: 12px;
+    padding-right: 12px;
     background:linear-gradient(90deg, rgba(#1B0536, 0.8) 40%, rgba(#110521, 0.3)100%);
     background-color: #6039BF !important;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);

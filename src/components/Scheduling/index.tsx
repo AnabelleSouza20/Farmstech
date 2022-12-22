@@ -132,7 +132,7 @@ function Scheduling({ onClose, assets, pole }: NewActiveProps) {
  
   return (
     <main>
-      <div className="cards">
+      <div className="cards_agend">
         <h4 className="title">Agendamento</h4>
         <form className="form">
           <div className="display-form">
