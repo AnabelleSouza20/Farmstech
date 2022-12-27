@@ -12,7 +12,8 @@ ENV REACT_APP_URL_API_HOST=ENVFILE
 ENV REACT_APP_URL_API_PORT=ENVFILE
 EXPOSE 3000
 
-#docker run --env-file ./.env.development --env-file ./.env.production -d -p 3000:3000 --name farmstech farmstech  
+#docker run --env-file ./.env.development --env-file ./.env.production -d -p 3000:3000
+# --name farmstech farmstech  
 
 COPY . .
 CMD ["npm", "run", "start"]

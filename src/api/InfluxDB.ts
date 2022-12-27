@@ -43,6 +43,8 @@ export default async function InfluxDB(query: string){
             "db": process.env.REACT_APP_INFLUXDB_DATABASE,
             "u": process.env.REACT_APP_INFLUXDB_DATABASE_USER,
             "p": process.env.REACT_APP_INFLUXDB_DATABASE_PASSWORD,
+            ssl: true,
+            verify_ssl: false,
             "q": query
         };
         return `${process.env.REACT_APP_INFLUXDB_IP}/query?${serialize(PARAMS)}`;
