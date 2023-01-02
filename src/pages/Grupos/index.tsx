@@ -62,7 +62,6 @@ export default function Groups() {
   const [isModalGroupVisible, setIsModalGroupVisible] = useState(false);
   const [isModalEdit, setIsModalEdit] = useState(false);
   const [isModalDelete, setIsModalDelete] = useState(false);
-  const [confirmDelete, setConfirmDelete] = useState<string>();
   const [selectGrup, setSelectGrup] = useState<String>();
 
   const sendApi = useApi();

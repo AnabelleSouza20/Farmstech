@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
   AzureMap,
   AzureMapDataSourceProvider,
@@ -34,6 +34,16 @@ const Mapa = () => {
   const [lamp1isOn, setLamp1isOn] = useState(false);
   const [lamp2isOn, setLamp2isOn] = useState(false);
   const [isRendered, setIsRendered] = useState(false);
+
+  console.log("selectedPole", selectedPole);
+  // reset selected pole when drawer is closed
+  useCallback(() => {
+    if (!isDrawerOpen) {
+      setSelectedPole(undefined);
+    }
+  }, [isDrawerOpen]);
+    
+
 
   useEffect(() => {
     (async () => {
@@ -105,8 +115,9 @@ const Mapa = () => {
   }, [selectedPole]);
 
   //extração de longitude e latitude do primeiro ativo carregado
-  const lati = parseFloat(poles[1]?.lat || "0");
-  const longi = parseFloat(poles[1]?.long || "0");
+  const lati = parseFloat(poles[3]?.lat || "0");
+  const longi = parseFloat(poles[3]?.long || "0");
+ //here
 
   return (
     <AzureMapsProvider
@@ -207,9 +218,9 @@ const Mapa = () => {
         <AzureMap
           options={mapOptions}
           cameraOptions={{
-            zoom: 17,
-            type: "fly",
-            duration: 5000,
+            zoom: 18.5,
+           // type: "fly", //animação de abertura do mapa
+            duration: 3000,
             center: [longi, lati],
           }}
         >
@@ -262,3 +273,7 @@ const Mapa = () => {
   );
 };
 export default Mapa;
+
+function ComponentDidMount() {
+    throw new Error("Function not implemented.");
+  }

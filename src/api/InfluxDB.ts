@@ -40,14 +40,14 @@ export default async function InfluxDB(query: string){
     function get_influx_base_url(query: string): string {
         const PARAMS = {
             "pretty": true, 
-            "db": process.env.REACT_APP_INFLUXDB_DATABASE,
-            "u": process.env.REACT_APP_INFLUXDB_DATABASE_USER,
-            "p": process.env.REACT_APP_INFLUXDB_DATABASE_PASSWORD,
+            "db": "dbFarmstech",
+            "u": "admin",
+            "p": "adminInfluxBit",
             ssl: true,
             verify_ssl: false,
             "q": query
         };
-        return `${process.env.REACT_APP_INFLUXDB_IP}/query?${serialize(PARAMS)}`;
+        return `${'https://52.226.69.167:8086'}/query?${serialize(PARAMS)}`;
     }
     
     return await fetch(get_influx_base_url(query), getPropsFetch()).then(res => res.json()).then((response: InfluxResponse) => format_influx_serie_data(response.results[0]) ).catch(() => ([]));

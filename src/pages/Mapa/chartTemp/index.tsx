@@ -53,9 +53,6 @@ export default function Chart(pole: any) {
         loadPageData()
     }, [pole])
     
-        
-
-    console.log(ambTemp);
 
     const tempAmpGraph: influxProps[] = ambTemp.map(data => {
         return {

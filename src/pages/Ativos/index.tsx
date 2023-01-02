@@ -74,11 +74,10 @@ const AccordionDetails: any = styled(MuiAccordionDetails)(({ theme }) => ({
 export default function Ativos() {
   const [lamps, setLamps] = useState<ILamp[]>([]);
   const [age, setAge] = useState("");
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [isModalEdit, setIsModalEdit] = useState(false);
-  const [isModalScheduling, setIsModalScheduling] = useState(false);
-  const [isModalDelete, setIsModalDelete] = useState(false);
-  const [selectPole, setSelectPole] = useState<ILamp>();
+  const [isActiveVisible, setIsActiveVisible] = useState(false);
+  const [isActiveEdit, setIsActiveEdit] = useState(false);
+  const [isActiveDelete, setIsActiveDelete] = useState(false);
+  const [selectActive, setselectActive] = useState<ILamp>();
   const requestApi = useApi();
   const handleChange = (event: SelectChangeEvent) => {
     setAge(event.target.value as string);
@@ -132,8 +131,8 @@ export default function Ativos() {
 
   return (
     <div>
-      {isModalDelete?(<DeleteAssets onClose={()=> setIsModalDelete(false)} assets={selectPole?.device}/>):null}
-      {isModalEdit ? ( <EditAssets onClose={() => setIsModalEdit(false)} assets={selectPole?.device}/>) : null}
+      {isActiveDelete?(<DeleteAssets onClose={()=> setIsActiveDelete(false)} assets={selectActive?.device}/>):null}
+      {isActiveEdit ? ( <EditAssets onClose={() => setIsActiveEdit(false)} assets={selectActive?.device}/>) : null}
       
       {/*Modal to confirm asset deletion*/}
     
@@ -143,12 +142,12 @@ export default function Ativos() {
           <Button
             className="btnIncluir01"
             variant="outlined"
-            onClick={() => setIsModalVisible(true)}
+            onClick={() => setIsActiveVisible(true)}
           >
             Incluir
           </Button>
-          {isModalVisible ? (
-            <NewActive onClose={() => setIsModalVisible(false)} />
+          {isActiveVisible ? (
+            <NewActive onClose={() => setIsActiveVisible(false)} />
           ) : null}
         </Grid>
         <Grid item xs={2}>
@@ -273,16 +272,16 @@ export default function Ativos() {
                         fontSize="large"
                         onClick={(e) => {
                           e.stopPropagation();
-                          setSelectPole(pole);
-                          setIsModalEdit(true);
+                          setselectActive(pole);
+                          setIsActiveEdit(true);
                         }}
                       />
                       <DeleteOutlined
                         className="iconDelete"
                         onClick={(e) => {
                           e.stopPropagation();
-                          setSelectPole(pole);
-                          setIsModalDelete(true)
+                          setselectActive(pole);
+                          setIsActiveDelete(true)
                         }}
                         fontSize="large"
                       />
@@ -354,16 +353,16 @@ export default function Ativos() {
                         fontSize="large"
                         onClick={(e) => {
                           e.stopPropagation();
-                          setSelectPole(pole);
-                          setIsModalEdit(true);
+                          setselectActive(pole);
+                          setIsActiveEdit(true);
                         }}
                       />
                       <DeleteOutlined
                         className="iconDelete"
                         onClick={(e) => {
                           e.stopPropagation();
-                          setSelectPole(pole);
-                          setIsModalDelete(true)
+                          setselectActive(pole);
+                          setIsActiveDelete(true)
                         }}
                         fontSize="large"
                       />
