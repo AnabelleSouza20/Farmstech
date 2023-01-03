@@ -47,7 +47,7 @@ export default async function InfluxDB(query: string){
             verify_ssl: false,
             "q": query
         };
-        return `${'https://52.226.69.167:8086'}/query?${serialize(PARAMS)}`;
+        return `${'http://52.226.69.167:8086'}/query?${serialize(PARAMS)}`;
     }
     
     return await fetch(get_influx_base_url(query), getPropsFetch()).then(res => res.json()).then((response: InfluxResponse) => format_influx_serie_data(response.results[0]) ).catch(() => ([]));

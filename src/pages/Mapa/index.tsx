@@ -24,6 +24,7 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
 const Mapa = () => {
   const requestApi = useApi();
+  const [isMapLoading, setIsMapLoading] = useState(true);
   const [poles, setPoles] = useState<PoleProps[]>([]);
   const [selectedPole, setSelectedPole] = useState<PoleProps>();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -35,13 +36,7 @@ const Mapa = () => {
   const [lamp2isOn, setLamp2isOn] = useState(false);
   const [isRendered, setIsRendered] = useState(false);
 
-  console.log("selectedPole", selectedPole);
-  // reset selected pole when drawer is closed
-  useCallback(() => {
-    if (!isDrawerOpen) {
-      setSelectedPole(undefined);
-    }
-  }, [isDrawerOpen]);
+
     
 
 
@@ -66,7 +61,7 @@ const Mapa = () => {
   const polesRefresh = async () => {
     try {
       const response = await requestApi<RequestBaseProps<PoleProps[]>>(
-        "/poles-status",
+        "/poles-status-dev",
         "get"
       );
 
@@ -115,12 +110,13 @@ const Mapa = () => {
   }, [selectedPole]);
 
   //extração de longitude e latitude do primeiro ativo carregado
-  const lati = parseFloat(poles[3]?.lat || "0");
-  const longi = parseFloat(poles[3]?.long || "0");
+  const lati = parseFloat(poles[1]?.lat || "0");
+  const longi = parseFloat(poles[1]?.long || "0");
  //here
 
   return (
     <AzureMapsProvider
+
     >
       <div
         style={{
@@ -216,7 +212,8 @@ const Mapa = () => {
         </Drawer>
 
         <AzureMap
-          options={mapOptions}
+          options={
+            mapOptions}
           cameraOptions={{
             zoom: 18.5,
            // type: "fly", //animação de abertura do mapa
@@ -235,7 +232,7 @@ const Mapa = () => {
                     const prop: any = e.shapes[0];
                     setPopupOptions({
                       ...popupOptions,
-                      pixelOffset: [0, -20],
+                      pixelOffset: [0, 0],
                       position: new data.Position(
                         prop.data.geometry.coordinates[0],
                         prop.data.geometry.coordinates[1]
