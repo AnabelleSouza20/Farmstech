@@ -24,7 +24,6 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
 const Mapa = () => {
   const requestApi = useApi();
-  const [isMapLoading, setIsMapLoading] = useState(true);
   const [poles, setPoles] = useState<PoleProps[]>([]);
   const [selectedPole, setSelectedPole] = useState<PoleProps>();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -35,11 +34,11 @@ const Mapa = () => {
   const [lamp1isOn, setLamp1isOn] = useState(false);
   const [lamp2isOn, setLamp2isOn] = useState(false);
   const [isRendered, setIsRendered] = useState(false);
+  const [isPolesInitialized, setIsPolesInitialized] = useState(false);
 
 
-    
 
-
+  // esse efeito ouve o estado de isPolesInitialized e executa a função de requisição
   useEffect(() => {
     (async () => {
       try {
@@ -47,29 +46,22 @@ const Mapa = () => {
           "/poles-status-dev",
           "get"
         );
-
+  
         if (response && response.data?.FL_STATUS) {
+          console.log(response.data.data)
+          console.log("poles set");
           setPoles(response.data.data);
+          setIsPolesInitialized(true);
         }
       } catch (err) {}
     })();
-  }, []);
+  }, [isPolesInitialized]);
+  
   useEffect(() => {
     setOpenedPopover(!!selectedPole);
   }, [selectedPole]);
 
-  const polesRefresh = async () => {
-    try {
-      const response = await requestApi<RequestBaseProps<PoleProps[]>>(
-        "/poles-status-dev",
-        "get"
-      );
 
-      if (response && response.data?.FL_STATUS) {
-        setPoles(response.data.data);
-      }
-    } catch (err) {}
-  };
 
   async function btnLampada(lamp: string, { device }: any, state: boolean) {
     const paramets = { [lamp]: state, devices: [device] };
@@ -83,7 +75,6 @@ const Mapa = () => {
       state
         ? toast.success("Acendeu a Lâmpada!")
         : toast.info("Desligou a Lâmpada!");
-      polesRefresh();
       if (lamp === "lamp1") {
         lamp1isOn ? setLamp1isOn(false) : setLamp1isOn(true);
         setLoading1(false);
@@ -95,9 +86,16 @@ const Mapa = () => {
       toast.error("Não foi possível acender a Lâmpada!, verifique a conexão");
     }
   }
+
+  //função que recebe a longitude e latitude do ponto clicado e busca no array de lampadas
   const getPole = async (long: string, lat: string) => {
     const pole = poles.find((pole) => pole.long === long && pole.lat === lat);
-    if (!pole) return;
+    console.log(long, lat, pole);
+    if (!pole) {
+      setIsPolesInitialized(false);
+      console.log("pole not found");
+      return;
+    }
     setSelectedPole(pole);
     setLamp1isOn(pole.lamp1);
     setLamp2isOn(pole.lamp2);
@@ -221,6 +219,8 @@ const Mapa = () => {
             center: [longi, lati],
           }}
         >
+           {/**  renderização condicional dos marcadores, só aparecerão se o "poles" estiver populado*/}
+          {isPolesInitialized ? (
           <AzureMapDataSourceProvider id="MultiplePoint">
             <AzureMapLayerProvider
               options={{
@@ -228,7 +228,9 @@ const Mapa = () => {
               }}
               events={{
                 click: (e: MapMouseEvent) => {
+
                   if (e.shapes && e.shapes.length > 0) {
+    
                     const prop: any = e.shapes[0];
                     setPopupOptions({
                       ...popupOptions,
@@ -247,7 +249,6 @@ const Mapa = () => {
               }}
               type="SymbolLayer"
             />
-
             {poles.map(({ long, lat }, index) => (
               <RenderPoint
                 key={`render-point-${index + 1}`}
@@ -264,13 +265,12 @@ const Mapa = () => {
               }
             />
           </AzureMapDataSourceProvider>
+          ) : (
+            <CircularProgress />
+          )}
         </AzureMap>
       </div>
     </AzureMapsProvider>
   );
 };
 export default Mapa;
-
-function ComponentDidMount() {
-    throw new Error("Function not implemented.");
-  }
