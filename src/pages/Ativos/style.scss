@@ -32,77 +32,38 @@
     border-radius: 20px;
     display: flex;
 }
-.MuiFormControl-root{
-    font-size: 30px;
-    border-radius: 5px !important;
-    border: none;
-    color: black !important;
-    
-}
-
-.css-ruq4u7-MuiFormLabel-root-MuiInputLabel-root{
-    color:black !important;
-}
-
-.css-ig0lvf-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root{
-    color: black !important;
-    background-color: #fff !important;
-}
-
-.css-1l62ksm-MuiFormLabel-root-MuiInputLabel-root{
-    color: black !important;
-    
-}
-.css-dg5hwf-MuiInputBase-root-MuiInput-root{
-    color: black !important;
-}
-
-.css-124jdpm-MuiPaper-root-MuiAccordion-root{
-    background-color: #EFE3FF !important;
-} 
-
-.css-gj1fbr-MuiGrid-root{
-    color: black !important;
-    font-weight: 600px !important;
-}
-.MuiAccordion-region{
-    background-color: #D9D9D9 !important;
-}
-.css-ahj2mt-MuiTypography-root{
-    color: black;
-    font-weight: 600px;
-}
 .accordion{
-    background-color: #EFE3FF !important;
-}
-.css-1qd6hlb-MuiPaper-root-MuiAccordion-root{
-    border: none !important;
+    background-color: #f8e1f8 !important;
     margin: 10px 10px;
-    background-color: #EFE3FF !important;
+    font-weight: bold !important;
+    color: #000000 !important;
 }
-.accordion{
-    border-radius: 10px !important;
+.accordionDetails{
+    background-color: #f5e0f2;
+    margin: 0px 10px;
+    border-radius: 5px;
+}
+.filtro{
+    background-color: #f7f7f7 !important;
+    margin: 10px 10px;
+    font-weight: bold !important;
+    color: #000000 !important;
+}
+.inputlabel{
+    color: #000000 !important;
+    font-size: large !important;
+}
+.accordion:hover{
+    background-color: #f7cef7 !important;
+    transform: scale(1.01);
+    transition: 0.5s ease-in-out !important;
+}
 
-}
-.css-1qd6hlb-MuiPaper-root-MuiAccordion-root{
-    color: rgba(0, 0, 0, 0.733) !important;
-}
-.MuiAccordion-region{
-    margin: 0 -10px !important;
-    border-radius: 10px;
-}
-
-.css-19hn6xk-MuiAccordionSummary-expandIconWrapper{
-    color: rgba(0, 0, 0, 0.733) !important;
-}
 .txtCabecalho{
     font-size: 25px;
     padding-top: 5px;
 }
-.css-1v40y74-MuiPaper-root-MuiDialog-paper{
-    background:linear-gradient(90deg, rgba(#1B0536, 0.8) 40%, rgba(#110521, 0.3)100%) !important;
-    background-color: #6039BF !important;
-}
+
 .btnConfirmarDelete{
     background: linear-gradient(180deg, #6038C0 0%, #5F3C8B 100%) !important;
     color: #fff !important;
@@ -118,8 +79,19 @@
     border-radius: 10px !important;
     
 }
-.css-yiavyu-MuiBackdrop-root-MuiDialog-backdrop {
-    background: none !important;
+
+.iconEdit{
+    color: #000000 !important;
+    margin-left: 10px;
+    margin-right: 10px;
+    transition: ease-in-out 0.5s;
+}
+
+.iconDelete{
+    color: #000000 !important;
+    margin-left: 10px;
+    margin-right: 10px;
+    transition: ease-in-out 0.5s;
 }
 
 .iconEdit:hover{

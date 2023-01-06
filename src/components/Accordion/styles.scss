@@ -1,0 +1,65 @@
+.accordion {
+    width: 100%;
+    overflow: hidden;
+  
+    &__top {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 0.1fr;
+      align-items: center;
+      cursor: pointer;
+      border: 1px solid #ccc;
+      border-bottom: 0;
+  
+      &__left {
+        display: grid;
+        align-items: center;
+        grid-template-columns: 1fr 1fr;
+  
+        &__sign {
+          flex-shrink: 0;
+          width: 20px;
+          text-align: center;
+        }
+  
+        &__title-container {
+          flex-grow: 1;
+          padding: 0 20px;
+  
+          &__title {
+            font-size: 18px;
+          }
+  
+          &__subtitle {
+            font-size: 14px;
+            color: #666;
+          }
+        }
+      }
+  
+      &__middle {
+        text-align: center;
+      }
+  
+      &__right {
+        text-align: center;
+      }
+    }
+  
+    &__bottom {
+      overflow: hidden;
+      border: 1px solid #ccc;
+      
+      &.expanded {
+        max-height: 1000px;
+      }
+  
+      &.notexpanded {
+        max-height: 0;
+      }
+  
+      &__description {
+        padding: 20px;
+      }
+    }
+  }
+  

@@ -9,7 +9,6 @@ import {
   Select,
   SelectChangeEvent,
   Switch,
-  TextField,
   ThemeProvider,
   Typography,
 } from "@mui/material";
@@ -23,13 +22,11 @@ import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import distinct_json from "../../utils/distinct";
 import {
   DeleteOutlined,
-  AccessAlarmOutlined,
   ModeEditOutlineOutlined,
 } from "@mui/icons-material";
 import { ILamp, RequestBaseProps } from "../../_types";
 import NewActive from "../../components/newActive/NewActive";
 import EditAssets from "../../components/EditAssets/index";
-import Scheduling from "../../components/Scheduling/index";
 import DeleteAssets from  "../../components/DeleteAssets/DeleteAssets"
 import "./style.scss";
 import useApi from "../../hooks/useApi";
@@ -37,39 +34,7 @@ import { toast } from "react-toastify";
 import formatDate from "../../utils/formatDate";
 import { useNavigate } from "react-router-dom";
 
-const Accordion = styled((props: AccordionProps) => (
-  <MuiAccordion disableGutters elevation={0} square {...props} />
-))(({ theme }) => ({
-  border: `10px solid ${theme.palette.divider}`,
-  "&:not(:last-child)": {
-    borderBottom: 1,
-  },
-  "&:before": {
-    display: "none",
-  },
-}));
 
-const AccordionSummary = styled((props: AccordionSummaryProps) => (
-  <MuiAccordionSummary
-    expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: "1.6rem" }} />}
-    {...props}
-  />
-))(({ theme }) => ({
-  borderBottom: `1px solid ${theme.palette.divider}`,
-  backgroundColor: "rgba(255, 255, 255, .05)",
-  flexDirection: "row-reverse",
-  "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
-    transform: "rotate(90deg)",
-  },
-  "& .MuiAccordionSummary-content": {
-    marginBottom: theme.spacing(0),
-  },
-}));
-
-const AccordionDetails: any = styled(MuiAccordionDetails)(({ theme }) => ({
-  padding: theme.spacing(2),
-  borderTop: "1px solid rgba(0, 0, 0, .125)",
-}));
 
 export default function Ativos() {
   const [lamps, setLamps] = useState<ILamp[]>([]);
@@ -99,16 +64,6 @@ export default function Ativos() {
     })();
   }, []);
 
-  const theme = createTheme({
-    palette: {
-      primary: {
-        main: "#7F00FF",
-      },
-      secondary: {
-        main: "#7F00FF",
-      },
-    },
-  });
 
   //Function responsible for listing the groups to list the assets from the groups
   const series = distinct_json(lamps, "group");
@@ -169,13 +124,14 @@ export default function Ativos() {
           alignItems="center"
         >
           <FormControl sx={{ minWidth: 300 }}>
-            <InputLabel id="demo-simple-select-label" color="primary">
+            <InputLabel id="demo-simple-select-label" color="primary" className="inputlabel">
               Grupo
             </InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               label="Age"
+              className="filtro"
               onChange={handleChange}
             >
               <MenuItem value={"Todos"}>Todos</MenuItem>
@@ -221,14 +177,15 @@ export default function Ativos() {
           {lamps.map((pole) => {
             if (pole.group === age) {
               return (
-                <div className="accordion">
-                <Accordion key={pole.device}>
-                  <AccordionSummary
+                <MuiAccordion key={pole.device }
+                className="accordion"
+                >
+                  <MuiAccordionSummary
                     aria-controls="panel1d-content"
                     id="panel1d-header"
                   >
                     <Grid item xs={4}>
-                      <Typography>
+                      <div className="txtAtivos">
                         {pole.device} <br />
                         <div
                           style={{
@@ -242,13 +199,12 @@ export default function Ativos() {
                             "DD/MM/YYYY HH:ss"
                           )}
                         </div>
-                      </Typography>
+                      </div>
                     </Grid>
                     <Grid item xs={3}>
                       <Typography> {pole.group} </Typography>
                     </Grid>
                     <Grid item xs={2}>
-                      <ThemeProvider theme={theme}>
                         <Typography>
                           <Switch
                             checked={pole.lamp1 || pole.lamp2 ? true : false}
@@ -261,7 +217,6 @@ export default function Ativos() {
                             }}
                           />
                         </Typography>
-                      </ThemeProvider>
                     </Grid>
                     <Grid
                       container
@@ -289,23 +244,19 @@ export default function Ativos() {
                       />
                      
                     </Grid>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Typography>
+                  </MuiAccordionSummary>
+                  <MuiAccordionDetails className="accordionDetails">
+                    
                       Localização: {pole.desc} <br />
                       latitude:{pole.lat} <br />
                       longitude:{pole.long} <br />
-                      <br />{" "}
-                    </Typography>
-                  </AccordionDetails>
-                </Accordion>
-              </div>
+                  </MuiAccordionDetails>
+                </MuiAccordion>
               );
             } else if (age === "" || age === "Todos")
               return (
-                <div className="accordion">
-                <Accordion key={pole.device}>
-                  <AccordionSummary
+                <MuiAccordion key={pole.device} className="accordion">
+                  <MuiAccordionSummary
                     aria-controls="panel1d-content"
                     id="panel1d-header"
                   >
@@ -330,7 +281,6 @@ export default function Ativos() {
                       <Typography> {pole.group} </Typography>
                     </Grid>
                     <Grid item xs={2}>
-                      <ThemeProvider theme={theme}>
                         <Typography>
                           <Switch
                             checked={pole.lamp1 || pole.lamp2 ? true : false}
@@ -342,7 +292,6 @@ export default function Ativos() {
                             }}
                           />
                         </Typography>
-                      </ThemeProvider>
                     </Grid>
                     <Grid
                       container
@@ -370,17 +319,16 @@ export default function Ativos() {
                       />
                       
                     </Grid>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Typography>
+                  </MuiAccordionSummary>
+                  <MuiAccordionDetails className="accordionDetails">
+                   
                       Localização: {pole.desc} <br />
                       latitude:{pole.lat} <br />
                       longitude:{pole.long} <br />
                       <br />{" "}
-                    </Typography>
-                  </AccordionDetails>
-                </Accordion>
-              </div>
+                 
+                  </MuiAccordionDetails>
+                </MuiAccordion>
               );
           })}
         </Grid>
