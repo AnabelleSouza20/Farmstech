@@ -4,39 +4,64 @@ import { influxProps, influxPropsTemp, PoleProps } from "../../../_types/index";
 import { useState, useEffect } from 'react';
 import { generateColor, distinct_json } from "../../../utils";
 import formatDate from "../../../utils/formatDate";
+import "./styles.scss"
 
 
 export default function Chart(pole: any) {
     const [loading, setLoading] = useState<boolean>(true);
     const [tempAssets, setTermpAssets] = useState<influxProps[]>([]);
     const [ambTemp, setAmbTemp] = useState<influxPropsTemp[]>([]);
+    const [filter, setFilter] = useState<string>('');
     const [options, setOptions] = useState<Props>({
         type: 'line',
         width: '600px',
         height: 300,
-        options:{
-              yaxis: {
+        options: {
+            chart: {
+                id: 'basic-bar',
+                toolbar: {
+                    show: false
+                },
+                zoom: {
+                    enabled: false
+                },
+                animations: {
+                    enabled: false
+                },
+                foreColor: 'white',
+                dropShadow: {
+                    enabled: true,
+                    top: 0,
+                    left: 0,
+                    blur: 3,
+                    opacity: 0.5
+                }
+            },
+            yaxis: {
                 labels: {
-                    style:{
+                    style: {
                         colors: 'white',
                     }
                 }
             },
             legend: {
-               labels:{
-                colors: 'white'
-               }
+                labels: {
+                    colors: 'white'
+                }
 
             },
 
-       }
+        }
     })
 
     const influxInit = () => {
 
-        InfluxDB("SELECT * FROM Temp_Device WHERE device = '" + pole.pole.device + "' AND time > now() - 20d").then(result =>  setTermpAssets(result) );
-        InfluxDB("SELECT * FROM ambTemp WHERE time > now() - 20d").then(result =>  setAmbTemp(result) );
+        InfluxDB("SELECT * FROM Temp_Device WHERE device = '" + pole.pole.device + "' AND time > now() - " + filter).then(result => setTermpAssets(result));
+        InfluxDB("SELECT * FROM ambTemp WHERE time > now() - " + filter).then(result => setAmbTemp(result));
     }
+    useEffect(() => {
+        influxInit();
+    }, [filter])
 
     useEffect(() => {
         const loadPageData = async () => {
@@ -52,7 +77,7 @@ export default function Chart(pole: any) {
         }
         loadPageData()
     }, [pole])
-    
+
 
     const tempAmpGraph: influxProps[] = ambTemp.map(data => {
         return {
@@ -76,18 +101,18 @@ export default function Chart(pole: any) {
                 })
             };
         });
-        
+
         const xaxis = {
             categories: distinct_times.map((time: string) => formatDate(new Date(time), "DD/MM HH:ss")),
             labels: {
-                style:{
+                style: {
                     colors: 'white',
                 }
             }
         }
 
 
-        setOptions(({options,...opt}) => ({ ...opt, series, options: {...options, xaxis}}));
+        setOptions(({ options, ...opt }) => ({ ...opt, series, options: { ...options, xaxis } }));
     }, [tempAssets])
 
 
@@ -96,8 +121,16 @@ export default function Chart(pole: any) {
         return <h1>Loading...</h1>
     }
     return (
-        <>
+        <div className="chartTemp">
+            <div className="dropdown">
+                <button className="dropbtn">Exibir: </button>
+                <div className="dropdown-content">
+                    <a onClick={() => setFilter('1d')}>Últimas 24 horas</a>
+                    <a onClick={() => setFilter('30d')}>Últimos 30 dias</a>
+                    <a onClick={() => setFilter('60d')}>Últimos 60 dias</a>
+                </div>
+            </div>
             <ApexChart {...options} />
-        </>
+        </div>
     )
 }

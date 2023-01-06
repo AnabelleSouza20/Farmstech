@@ -20,9 +20,7 @@ const App = () => {
 				theme="colored"
 			/>
 			<Theme>
-				<AzureMapsProvider>
 					<RoutesComponent />
-				</AzureMapsProvider>
 			</Theme>
 
 		</BrowserRouter>

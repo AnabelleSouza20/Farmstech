@@ -48,8 +48,6 @@ const Mapa = () => {
         );
   
         if (response && response.data?.FL_STATUS) {
-          console.log(response.data.data)
-          console.log("poles set");
           setPoles(response.data.data);
           setIsPolesInitialized(true);
         }
@@ -72,16 +70,36 @@ const Mapa = () => {
       false
     );
     if (response?.data && response.data.FL_STATUS) {
-      state
-        ? toast.success("Acendeu a Lâmpada!")
-        : toast.info("Desligou a Lâmpada!");
+      if (lamp === "allLamps") {
+        lamp1isOn ? setLamp1isOn(false) : setLamp1isOn(true);
+        lamp2isOn ? setLamp2isOn(false) : setLamp2isOn(true);
+        setLoading1(false);
+        setLoading2(false);
+        if (lamp1isOn && lamp2isOn) { 
+          toast.success("Apagou as Lâmpadas!");
+        } else {
+          toast.success("Acendeu as Lâmpadas!");
+        }
+      }
+      // controle individual das lampadas
+      /* else 
       if (lamp === "lamp1") {
         lamp1isOn ? setLamp1isOn(false) : setLamp1isOn(true);
         setLoading1(false);
+        if (lamp1isOn) {
+          toast.success("Apagou a Lâmpada!");
+        } else {
+          toast.success("Acendeu a Lâmpada!");
+        }
       } else {
         lamp2isOn ? setLamp2isOn(false) : setLamp2isOn(true);
         setLoading2(false);
-      }
+        if (lamp2isOn) {
+          toast.success("Apagou a Lâmpada!");
+        } else {
+          toast.success("Acendeu a Lâmpada!");
+        }
+      } */
     } else {
       toast.error("Não foi possível acender a Lâmpada!, verifique a conexão");
     }
@@ -90,10 +108,8 @@ const Mapa = () => {
   //função que recebe a longitude e latitude do ponto clicado e busca no array de lampadas
   const getPole = async (long: string, lat: string) => {
     const pole = poles.find((pole) => pole.long === long && pole.lat === lat);
-    console.log(long, lat, pole);
     if (!pole) {
       setIsPolesInitialized(false);
-      console.log("pole not found");
       return;
     }
     setSelectedPole(pole);
@@ -108,8 +124,8 @@ const Mapa = () => {
   }, [selectedPole]);
 
   //extração de longitude e latitude do primeiro ativo carregado
-  const lati = parseFloat(poles[1]?.lat || "0");
-  const longi = parseFloat(poles[1]?.long || "0");
+  //const lati = parseFloat(poles[1]?.lat || "0");
+  //const longi = parseFloat(poles[1]?.long || "0");
  //here
 
   return (
@@ -158,7 +174,8 @@ const Mapa = () => {
               ) : ( null )}
               <div className="lampadasTitle">
                 <h3>
-                  Lâmpada 1 <br />
+                  Lâmpadas
+                </h3>
                   {isLoading1 ? (
                     <CircularProgress />
                   ) : (
@@ -166,31 +183,13 @@ const Mapa = () => {
                       className="itembtn"
                       onClick={() => {
                         setLoading1(true);
-                        btnLampada("lamp1", selectedPole, !selectedPole?.lamp1);
+                        btnLampada("allLamps", selectedPole, !selectedPole?.lamp1);
                       }}
                     >
                       {lamp1isOn ? "Desligar" : "Ligar"}
                     </button>
                   )}
-                </h3>
-                <h3>
-                  Lâmpada 2
-                  <br />
-                  {isLoading2 ? (
-                    <CircularProgress />
-                  ) : (
-                    <button
-                      className="itembtn"
-                      onClick={() => {
-                        setLoading2(true);
-                        btnLampada("lamp2", selectedPole, !selectedPole?.lamp2);
-                      }}
-                    >
-                      {lamp2isOn ? "Desligar" : "Ligar"}
-                    </button>
-                  )}
-                  <br /> <br /> <br />
-                </h3>
+                
               </div>
               
               <Chart
@@ -216,7 +215,7 @@ const Mapa = () => {
             zoom: 18.5,
            // type: "fly", //animação de abertura do mapa
             duration: 3000,
-            center: [longi, lati],
+            center: [-46.472809010590716, -22.49694307185298],
           }}
         >
            {/**  renderização condicional dos marcadores, só aparecerão se o "poles" estiver populado*/}

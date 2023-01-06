@@ -116,7 +116,8 @@ export default function Ativos() {
   // Turns the asset lights on and off
   async function btnLamp(lamp: string, { device }: ILamp, state: boolean) {
     const paramets = { [lamp]: state, devices: [device] };
-    const res = await requestApi<{ FL_STATUS: boolean; message: string }>(
+
+      const res = await requestApi<{ FL_STATUS: boolean; message: string }>(
       "lamps-aut-dev",
       "post",
       paramets
@@ -132,7 +133,7 @@ export default function Ativos() {
   return (
     <div>
       {isActiveDelete?(<DeleteAssets onClose={()=> setIsActiveDelete(false)} assets={selectActive?.device}/>):null}
-      {isActiveEdit ? ( <EditAssets onClose={() => setIsActiveEdit(false)} assets={selectActive?.device}/>) : null}
+      {isActiveEdit ? ( <EditAssets onClose={() => setIsActiveEdit(false)} assets={selectActive}/>) : null}
       
       {/*Modal to confirm asset deletion*/}
     
@@ -255,7 +256,8 @@ export default function Ativos() {
                               e.stopPropagation();
                               const status =
                                 pole.lamp1 || pole.lamp2 ? false : true;
-                              btnLamp("allLamps", pole, status);
+                              btnLamp("lamp1", pole, status);
+                              btnLamp("lamp2", pole, status);
                             }}
                           />
                         </Typography>

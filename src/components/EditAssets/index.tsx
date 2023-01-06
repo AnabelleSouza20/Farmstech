@@ -1,5 +1,5 @@
 
-import { FormNewActive, NewActiveProps } from "../../_types";
+import { FormNewActive, NewActiveProps, PoleProps } from "../../_types";
 import "./styles.scss";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
